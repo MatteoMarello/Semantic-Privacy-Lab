@@ -4,7 +4,9 @@
 privacy–utility trade-off of seven anonymization strategies against two re-identification attacks, on a synthetic
 population where the identity of every author and every identifying span is known exactly.
 
-> Status: experiment code and tests complete; results below are filled from `results/RESULTS.md` after the full run.
+> **Status: work in progress.** Run 1 (the preregistered measurements) is complete:
+> [`results/run1_preregistered_only/RESULTS.md`](results/run1_preregistered_only/RESULTS.md). Run 2, which adds a
+> test set with unseen phrasings and an over-masking measure, has not been run yet.
 
 ## Why
 Masking names and e-mail addresses is the default "anonymization" in many pipelines. But people are also identified
@@ -31,8 +33,24 @@ re-identification risk and utility loss can be measured for each strategy on ide
 - **Uncertainty**: 95% bootstrap intervals over test tickets. Hypotheses were written down before running:
   [`docs/PREREGISTRATION.md`](docs/PREREGISTRATION.md).
 
-## Results
-Pending the full run.
+## Results so far (run 1; 800 test tickets, register of 5,000 people, 95% bootstrap intervals)
+
+| Strategy | Linkage re-identification (top-1) | Embedding similarity to original |
+|---|---|---|
+| S0 none | 0.863 [0.840, 0.883] | 1.000 |
+| S1 regex | 0.712 [0.684, 0.740] | 0.985 [0.983, 0.987] |
+| S2 off-the-shelf NER | 0.279 [0.254, 0.305] | 0.899 [0.893, 0.905] |
+| S4 oracle, direct identifiers masked | 0.429 [0.402, 0.458] | 0.968 [0.966, 0.971] |
+| S5 oracle, + quasi-identifiers generalized | 0.190 [0.170, 0.211] | 0.879 [0.874, 0.885] |
+| S6 oracle, + contextual clues suppressed | 0.013 [0.010, 0.015] | 0.813 [0.806, 0.819] |
+
+- Masking direct identifiers alone leaves 43% of authors re-identifiable from ordinary facts (H1 supported).
+- Off-the-shelf NER is far weaker on lowercase tickets: 0.654 re-identification vs. 0.178 on normally cased ones.
+- Risk falls with register size for every strategy (e.g. S4: 0.580 / 0.429 / 0.320 at 1k / 5k / 20k people; H4).
+- Not reported as results: the trained span detector (S3) reaches 0.000 re-identification, but it was trained and
+  tested on the same phrasings, so this measures memorization; run 2 tests it on unseen phrasings. The
+  request-category F1 is 1.000 for every strategy (the category signal never overlaps identity spans), so the
+  preregistered utility hypothesis H3 cannot be tested with that measure.
 
 ## Reproduce
 ```bash
