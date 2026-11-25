@@ -1,0 +1,2320 @@
+{
+ "reproducibility_max_abs_diff": 2.8572976540353068e-08,
+ "reproducibility_by_strategy": {
+  "S0_none": 0.0,
+  "S1_regex": 0.0,
+  "S2_ner": 0.0,
+  "S3_trained_detector": 0.0,
+  "S4_oracle_direct": 0.0,
+  "S5_oracle_generalize": 0.0,
+  "S6_oracle_full": 0.0
+ },
+ "h2_shifted_diff": {
+  "point": 0.2747819520212117,
+  "lo": 0.24808503261669487,
+  "hi": 0.30367326664736055,
+  "n": 800
+ },
+ "hypotheses": {
+  "H1": {
+   "verdict": "supported",
+   "evidence": "S4 linkage top-1 = 0.429 [0.402, 0.458]; rule: lower bound > 0.20."
+  },
+  "H2": {
+   "verdict": "supported",
+   "evidence": "S2 \u2212 S3 linkage top-1 = 0.279 [0.254, 0.305] (paired); rule: lower bound > 0. S3 was tested on the phrasings it was trained on; on unseen phrasings (post-hoc) the difference is 0.275 [0.248, 0.304]."
+  },
+  "H3": {
+   "verdict": "first part not testable (U1 at ceiling); second part supported",
+   "evidence": "U1 macro-F1 = 1.000\u20131.000 for every strategy, so the comparison 'reduces re-identification more than U1' is trivially true and uninformative (relative re-identification reduction vs. S0: S5 78.0%, S6 98.5%; U1 reduction 0). U2 = 1.000 for every strategy."
+  },
+  "H4": {
+   "verdict": "supported",
+   "evidence": "rule: point estimates strictly decrease 1k \u2192 5k \u2192 20k and the paired 1k \u2212 20k difference excludes 0. Met by every strategy; for S3 the effect is at the floor (\u2264 0.001 at every size)."
+  }
+ },
+ "rarity": {
+  "S0_none": {
+   "k = 1": {
+    "point": 0.7782608776427203,
+    "lo": 0.6222446694617415,
+    "hi": 0.9258669574700109,
+    "n": 25
+   },
+   "k = 2\u20135": {
+    "point": 0.8559266073527858,
+    "lo": 0.8176236497930488,
+    "hi": 0.8959372219033723,
+    "n": 248
+   },
+   "k = 6\u201320": {
+    "point": 0.8713554332427991,
+    "lo": 0.8439552065821251,
+    "hi": 0.8983471119254893,
+    "n": 441
+   },
+   "k > 20": {
+    "point": 0.8668119919512117,
+    "lo": 0.8008209928824508,
+    "hi": 0.9326432308565783,
+    "n": 86
+   }
+  },
+  "S1_regex": {
+   "k = 1": {
+    "point": 0.6672688776427204,
+    "lo": 0.4877342448206615,
+    "hi": 0.8483020988172925,
+    "n": 25
+   },
+   "k = 2\u20135": {
+    "point": 0.7201370814217749,
+    "lo": 0.6718551225011913,
+    "hi": 0.7700596529178346,
+    "n": 248
+   },
+   "k = 6\u201320": {
+    "point": 0.7190985323704077,
+    "lo": 0.6810979196103419,
+    "hi": 0.7599755139662085,
+    "n": 441
+   },
+   "k > 20": {
+    "point": 0.6680291811808382,
+    "lo": 0.5723157099805724,
+    "hi": 0.7592448486715415,
+    "n": 86
+   }
+  },
+  "S2_ner": {
+   "k = 1": {
+    "point": 0.26984714699400003,
+    "lo": 0.14123621101893613,
+    "hi": 0.4120920693902781,
+    "n": 25
+   },
+   "k = 2\u20135": {
+    "point": 0.258791077541497,
+    "lo": 0.21168336372349464,
+    "hi": 0.3074972888865126,
+    "n": 248
+   },
+   "k = 6\u201320": {
+    "point": 0.2993775847057164,
+    "lo": 0.26339264445430854,
+    "hi": 0.33878939279930265,
+    "n": 441
+   },
+   "k > 20": {
+    "point": 0.23966535069625702,
+    "lo": 0.1583230781634767,
+    "hi": 0.32176570628157536,
+    "n": 86
+   }
+  },
+  "S3_trained_detector": {
+   "k = 1": {
+    "point": 0.0002,
+    "lo": 0.0002,
+    "hi": 0.0002,
+    "n": 25
+   },
+   "k = 2\u20135": {
+    "point": 0.00020000000000000006,
+    "lo": 0.00020000000000000006,
+    "hi": 0.00020000000000000006,
+    "n": 248
+   },
+   "k = 6\u201320": {
+    "point": 0.00020000000000000006,
+    "lo": 0.00020000000000000006,
+    "hi": 0.00020000000000000006,
+    "n": 441
+   },
+   "k > 20": {
+    "point": 0.00019999999999999996,
+    "lo": 0.00019999999999999996,
+    "hi": 0.00019999999999999996,
+    "n": 86
+   }
+  },
+  "S4_oracle_direct": {
+   "k = 1": {
+    "point": 0.49390761008067297,
+    "lo": 0.33568811682717736,
+    "hi": 0.678330065003798,
+    "n": 25
+   },
+   "k = 2\u20135": {
+    "point": 0.45642242676133465,
+    "lo": 0.4043723558120904,
+    "hi": 0.5155797797748523,
+    "n": 248
+   },
+   "k = 6\u201320": {
+    "point": 0.42514437616702144,
+    "lo": 0.3872247594663139,
+    "hi": 0.46644756027851886,
+    "n": 441
+   },
+   "k > 20": {
+    "point": 0.3530708314213603,
+    "lo": 0.26082680595864427,
+    "hi": 0.44020465267279274,
+    "n": 86
+   }
+  },
+  "S5_oracle_generalize": {
+   "k = 1": {
+    "point": 0.36292039417661004,
+    "lo": 0.20474926830288762,
+    "hi": 0.5525780828700423,
+    "n": 25
+   },
+   "k = 2\u20135": {
+    "point": 0.2167703825369304,
+    "lo": 0.17750071088156502,
+    "hi": 0.25852148656800467,
+    "n": 248
+   },
+   "k = 6\u201320": {
+    "point": 0.17469565402931064,
+    "lo": 0.14945416926161575,
+    "hi": 0.201653428479878,
+    "n": 441
+   },
+   "k > 20": {
+    "point": 0.14115620813459978,
+    "lo": 0.08389109448558567,
+    "hi": 0.20381358483188378,
+    "n": 86
+   }
+  },
+  "S6_oracle_full": {
+   "k = 1": {
+    "point": 0.03056218134506884,
+    "lo": 0.010923038024804932,
+    "hi": 0.057531653692179975,
+    "n": 25
+   },
+   "k = 2\u20135": {
+    "point": 0.02166709617418183,
+    "lo": 0.015223178738664493,
+    "hi": 0.030406635686319485,
+    "n": 248
+   },
+   "k = 6\u201320": {
+    "point": 0.008480753475515588,
+    "lo": 0.007217515326646106,
+    "hi": 0.00990030097572829,
+    "n": 441
+   },
+   "k > 20": {
+    "point": 0.003556987307326862,
+    "lo": 0.002676283243626912,
+    "hi": 0.004565862835054081,
+    "n": 86
+   }
+  }
+ },
+ "shift": {
+  "S0_none": {
+   "link_top1_5000": {
+    "test": {
+     "point": 0.8631748724155469,
+     "lo": 0.8401657552813675,
+     "hi": 0.8832507329576359,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 0.8909495643984187,
+     "lo": 0.8709875847799696,
+     "hi": 0.9107034302940431,
+     "n": 800
+    }
+   },
+   "link_top1_diff": {
+    "point": 0.027774691982871823,
+    "lo": 0.00024520231059448825,
+    "hi": 0.057762059404423076,
+    "n": 800
+   },
+   "leak_direct": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 569
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 638
+    }
+   },
+   "leak_quasi": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 622
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 630
+    }
+   },
+   "leak_context": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 445
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 452
+    }
+   },
+   "other_word_retention": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    }
+   }
+  },
+  "S1_regex": {
+   "link_top1_5000": {
+    "test": {
+     "point": 0.7123108506132125,
+     "lo": 0.6842158115170269,
+     "hi": 0.7404868198127565,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 0.7716683010743995,
+     "lo": 0.7441865372206328,
+     "hi": 0.7978170868241832,
+     "n": 800
+    }
+   },
+   "link_top1_diff": {
+    "point": 0.059357450461186956,
+    "lo": 0.022875675498246376,
+    "hi": 0.09560590216414386,
+    "n": 800
+   },
+   "leak_direct": {
+    "test": {
+     "point": 0.5228471001757469,
+     "lo": 0.4894478617457528,
+     "hi": 0.5571177504393673,
+     "n": 569
+    },
+    "test_shifted": {
+     "point": 0.6410658307210031,
+     "lo": 0.610233803552769,
+     "hi": 0.6729362591431558,
+     "n": 638
+    }
+   },
+   "leak_quasi": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 622
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 630
+    }
+   },
+   "leak_context": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 445
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 452
+    }
+   },
+   "other_word_retention": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    }
+   }
+  },
+  "S2_ner": {
+   "link_top1_5000": {
+    "test": {
+     "point": 0.2794538761503004,
+     "lo": 0.2537288863525015,
+     "hi": 0.3052635906992538,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 0.2779099967511354,
+     "lo": 0.25088715702472947,
+     "hi": 0.30653716040814055,
+     "n": 800
+    }
+   },
+   "link_top1_diff": {
+    "point": -0.001543879399164932,
+    "lo": -0.04031254947284392,
+    "hi": 0.035620741386386164,
+    "n": 800
+   },
+   "leak_direct": {
+    "test": {
+     "point": 0.10486233157586407,
+     "lo": 0.08289396602226128,
+     "hi": 0.1282952548330404,
+     "n": 569
+    },
+    "test_shifted": {
+     "point": 0.11468129571577845,
+     "lo": 0.09456635318704283,
+     "hi": 0.1366509926854754,
+     "n": 638
+    }
+   },
+   "leak_quasi": {
+    "test": {
+     "point": 0.6682743837084673,
+     "lo": 0.6369105037513397,
+     "hi": 0.6977491961414791,
+     "n": 622
+    },
+    "test_shifted": {
+     "point": 0.6626984126984127,
+     "lo": 0.6343915343915343,
+     "hi": 0.6923346560846559,
+     "n": 630
+    }
+   },
+   "leak_context": {
+    "test": {
+     "point": 0.6206741573033707,
+     "lo": 0.5868146067415729,
+     "hi": 0.6532621722846441,
+     "n": 445
+    },
+    "test_shifted": {
+     "point": 0.5973451327433629,
+     "lo": 0.5608407079646017,
+     "hi": 0.6349649705014749,
+     "n": 452
+    }
+   },
+   "other_word_retention": {
+    "test": {
+     "point": 0.9997456455273338,
+     "lo": 0.9995026891754516,
+     "hi": 0.9999456521739131,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    }
+   }
+  },
+  "S3_trained_detector": {
+   "link_top1_5000": {
+    "test": {
+     "point": 0.00020000000000000004,
+     "lo": 0.00020000000000000004,
+     "hi": 0.00020000000000000004,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 0.003128044729923717,
+     "lo": 0.002322967792758423,
+     "hi": 0.004350889825585809,
+     "n": 800
+    }
+   },
+   "link_top1_diff": {
+    "point": 0.0029280447299237173,
+    "lo": 0.0021229677927584235,
+    "hi": 0.00415088982558581,
+    "n": 800
+   },
+   "leak_direct": {
+    "test": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 569
+    },
+    "test_shifted": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 638
+    }
+   },
+   "leak_quasi": {
+    "test": {
+     "point": 0.003483386923901393,
+     "lo": 0.0005359056806002144,
+     "hi": 0.0077706323687031075,
+     "n": 622
+    },
+    "test_shifted": {
+     "point": 0.1398148148148148,
+     "lo": 0.11851190476190475,
+     "hi": 0.16217592592592592,
+     "n": 630
+    }
+   },
+   "leak_context": {
+    "test": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 445
+    },
+    "test_shifted": {
+     "point": 0.041851032448377574,
+     "lo": 0.03078908554572271,
+     "hi": 0.054941002949852505,
+     "n": 452
+    }
+   },
+   "other_word_retention": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 0.9826481668316549,
+     "lo": 0.9810844266744005,
+     "hi": 0.9841630506954724,
+     "n": 800
+    }
+   }
+  },
+  "S4_oracle_direct": {
+   "link_top1_5000": {
+    "test": {
+     "point": 0.4292415168509015,
+     "lo": 0.40211214227262476,
+     "hi": 0.4577624050481132,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 0.4325618769730326,
+     "lo": 0.4013417521387828,
+     "hi": 0.46375273797922056,
+     "n": 800
+    }
+   },
+   "link_top1_diff": {
+    "point": 0.003320360122131074,
+    "lo": -0.0388736972943095,
+    "hi": 0.045039068938078915,
+    "n": 800
+   },
+   "leak_direct": {
+    "test": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 569
+    },
+    "test_shifted": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 638
+    }
+   },
+   "leak_quasi": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 622
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 630
+    }
+   },
+   "leak_context": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 445
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 452
+    }
+   },
+   "other_word_retention": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    }
+   }
+  },
+  "S5_oracle_generalize": {
+   "link_top1_5000": {
+    "test": {
+     "point": 0.19001535256259444,
+     "lo": 0.16988216412269536,
+     "hi": 0.21124347450954645,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 0.17214643251894224,
+     "lo": 0.1517270945409955,
+     "hi": 0.19224306310440237,
+     "n": 800
+    }
+   },
+   "link_top1_diff": {
+    "point": -0.0178689200436522,
+    "lo": -0.048069502469902194,
+    "hi": 0.011502250075435953,
+    "n": 800
+   },
+   "leak_direct": {
+    "test": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 569
+    },
+    "test_shifted": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 638
+    }
+   },
+   "leak_quasi": {
+    "test": {
+     "point": 0.05439442658092175,
+     "lo": 0.039251741693461954,
+     "hi": 0.06900120578778134,
+     "n": 622
+    },
+    "test_shifted": {
+     "point": 0.048544973544973544,
+     "lo": 0.034788359788359785,
+     "hi": 0.06244047619047618,
+     "n": 630
+    }
+   },
+   "leak_context": {
+    "test": {
+     "point": 0.8972284644194756,
+     "lo": 0.8794681647940074,
+     "hi": 0.914309925093633,
+     "n": 445
+    },
+    "test_shifted": {
+     "point": 0.8807153392330385,
+     "lo": 0.8609835914454276,
+     "hi": 0.8993362831858407,
+     "n": 452
+    }
+   },
+   "other_word_retention": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    }
+   }
+  },
+  "S6_oracle_full": {
+   "link_top1_5000": {
+    "test": {
+     "point": 0.012729259469945374,
+     "lo": 0.010443540245882841,
+     "hi": 0.015382958789905124,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 0.013385184410789586,
+     "lo": 0.010947335493055812,
+     "hi": 0.016286224344096583,
+     "n": 800
+    }
+   },
+   "link_top1_diff": {
+    "point": 0.0006559249408442103,
+    "lo": -0.0027759951925433314,
+    "hi": 0.004441392884198667,
+    "n": 800
+   },
+   "leak_direct": {
+    "test": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 569
+    },
+    "test_shifted": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 638
+    }
+   },
+   "leak_quasi": {
+    "test": {
+     "point": 0.05439442658092175,
+     "lo": 0.039251741693461954,
+     "hi": 0.06900120578778134,
+     "n": 622
+    },
+    "test_shifted": {
+     "point": 0.04775132275132275,
+     "lo": 0.034523809523809526,
+     "hi": 0.06164682539682539,
+     "n": 630
+    }
+   },
+   "leak_context": {
+    "test": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 445
+    },
+    "test_shifted": {
+     "point": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 452
+    }
+   },
+   "other_word_retention": {
+    "test": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    },
+    "test_shifted": {
+     "point": 1.0,
+     "lo": 1.0,
+     "hi": 1.0,
+     "n": 800
+    }
+   }
+  }
+ },
+ "s3_by_template": [
+  {
+   "split": "test",
+   "template": "I am {age} years old.",
+   "seen_in_training": true,
+   "n_spans": 165,
+   "s3_kept": 0.01818181818181818,
+   "s2_kept": 1.0
+  },
+  {
+   "split": "test",
+   "template": "I'm a {age}-year-old {occupation}.",
+   "seen_in_training": true,
+   "n_spans": 266,
+   "s3_kept": 0.0037593984962406013,
+   "s2_kept": 1.0
+  },
+  {
+   "split": "test",
+   "template": "I work at {employer}.",
+   "seen_in_training": true,
+   "n_spans": 158,
+   "s3_kept": 0.0,
+   "s2_kept": 0.17721518987341772
+  },
+  {
+   "split": "test",
+   "template": "My house is the blue one at the end of {street}.",
+   "seen_in_training": true,
+   "n_spans": 178,
+   "s3_kept": 0.0,
+   "s2_kept": 0.24157303370786518
+  },
+  {
+   "split": "test",
+   "template": "Best regards, {name}",
+   "seen_in_training": true,
+   "n_spans": 270,
+   "s3_kept": 0.0,
+   "s2_kept": 0.21481481481481482
+  },
+  {
+   "split": "test",
+   "template": "You can reach me at {email}.",
+   "seen_in_training": true,
+   "n_spans": 200,
+   "s3_kept": 0.0,
+   "s2_kept": 0.0
+  },
+  {
+   "split": "test",
+   "template": "I have been a customer since I moved here in {arrival_year}.",
+   "seen_in_training": true,
+   "n_spans": 202,
+   "s3_kept": 0.0,
+   "s2_kept": 1.0
+  },
+  {
+   "split": "test",
+   "template": "I live in {town}.",
+   "seen_in_training": true,
+   "n_spans": 171,
+   "s3_kept": 0.0,
+   "s2_kept": 0.19298245614035087
+  },
+  {
+   "split": "test",
+   "template": "I'm the only {occupation} on {street}, so the neighbours know me.",
+   "seen_in_training": true,
+   "n_spans": 212,
+   "s3_kept": 0.0,
+   "s2_kept": 0.6132075471698113
+  },
+  {
+   "split": "test",
+   "template": "My phone number is {phone}.",
+   "seen_in_training": true,
+   "n_spans": 198,
+   "s3_kept": 0.0,
+   "s2_kept": 0.0
+  },
+  {
+   "split": "test",
+   "template": "As {club_role_article} {club_role} of the {club}, I am often out in the evenings.",
+   "seen_in_training": true,
+   "n_spans": 128,
+   "s3_kept": 0.0,
+   "s2_kept": 0.6171875
+  },
+  {
+   "split": "test",
+   "template": "I am a {occupation} at {employer}.",
+   "seen_in_training": true,
+   "n_spans": 202,
+   "s3_kept": 0.0,
+   "s2_kept": 0.6039603960396039
+  },
+  {
+   "split": "test",
+   "template": "My name is {name}.",
+   "seen_in_training": true,
+   "n_spans": 171,
+   "s3_kept": 0.0,
+   "s2_kept": 0.2046783625730994
+  },
+  {
+   "split": "test",
+   "template": "I work as a {occupation}.",
+   "seen_in_training": true,
+   "n_spans": 135,
+   "s3_kept": 0.0,
+   "s2_kept": 1.0
+  },
+  {
+   "split": "test_shifted",
+   "template": "At {age}, I did not expect this.",
+   "seen_in_training": false,
+   "n_spans": 168,
+   "s3_kept": 0.6904761904761905,
+   "s2_kept": 1.0
+  },
+  {
+   "split": "test_shifted",
+   "template": "Everyone on {street} knows the {occupation} at number 12.",
+   "seen_in_training": false,
+   "n_spans": 244,
+   "s3_kept": 0.1598360655737705,
+   "s2_kept": 0.6188524590163934
+  },
+  {
+   "split": "test_shifted",
+   "template": "{age} years old and a {occupation} by trade, I keep careful records.",
+   "seen_in_training": false,
+   "n_spans": 236,
+   "s3_kept": 0.1228813559322034,
+   "s2_kept": 1.0
+  },
+  {
+   "split": "test_shifted",
+   "template": "Most evenings I am at the {club}, where I serve as {club_role}.",
+   "seen_in_training": false,
+   "n_spans": 132,
+   "s3_kept": 0.030303030303030304,
+   "s2_kept": 0.6060606060606061
+  },
+  {
+   "split": "test_shifted",
+   "template": "This is {name} writing.",
+   "seen_in_training": false,
+   "n_spans": 198,
+   "s3_kept": 0.0,
+   "s2_kept": 0.19696969696969696
+  },
+  {
+   "split": "test_shifted",
+   "template": "Many thanks, {name}",
+   "seen_in_training": false,
+   "n_spans": 416,
+   "s3_kept": 0.0,
+   "s2_kept": 0.18269230769230768
+  },
+  {
+   "split": "test_shifted",
+   "template": "Call me back on {phone} if needed.",
+   "seen_in_training": false,
+   "n_spans": 192,
+   "s3_kept": 0.0,
+   "s2_kept": 0.0
+  },
+  {
+   "split": "test_shifted",
+   "template": "My employer, {employer}, can confirm my working hours.",
+   "seen_in_training": false,
+   "n_spans": 180,
+   "s3_kept": 0.0,
+   "s2_kept": 0.25
+  },
+  {
+   "split": "test_shifted",
+   "template": "Please reply to {email}.",
+   "seen_in_training": false,
+   "n_spans": 174,
+   "s3_kept": 0.0,
+   "s2_kept": 0.0
+  },
+  {
+   "split": "test_shifted",
+   "template": "We are the house with the green door on {street}.",
+   "seen_in_training": false,
+   "n_spans": 178,
+   "s3_kept": 0.0,
+   "s2_kept": 0.21348314606741572
+  },
+  {
+   "split": "test_shifted",
+   "template": "We settled here back in {arrival_year}.",
+   "seen_in_training": false,
+   "n_spans": 182,
+   "s3_kept": 0.0,
+   "s2_kept": 1.0
+  },
+  {
+   "split": "test_shifted",
+   "template": "I have been a {occupation} with {employer} for years.",
+   "seen_in_training": false,
+   "n_spans": 236,
+   "s3_kept": 0.0,
+   "s2_kept": 0.6059322033898306
+  },
+  {
+   "split": "test_shifted",
+   "template": "Our flat is in {town}.",
+   "seen_in_training": false,
+   "n_spans": 178,
+   "s3_kept": 0.0,
+   "s2_kept": 0.17415730337078653
+  },
+  {
+   "split": "test_shifted",
+   "template": "My job as a {occupation} keeps me away during the day.",
+   "seen_in_training": false,
+   "n_spans": 123,
+   "s3_kept": 0.0,
+   "s2_kept": 1.0
+  }
+ ],
+ "s3_overmasked_shifted": {
+  "<name> writing": 195,
+  "12": 111,
+  "trade": 85,
+  "door": 16,
+  "green door": 2
+ },
+ "s3_char_precision": {
+  "test": 1.0,
+  "test_shifted": 0.9325712445660924
+ },
+ "residual": {
+  "test/S4_oracle_direct": {
+   "age + employer + occupation + street": {
+    "n": 10,
+    "top1": 1.0
+   },
+   "arrival_year + street + town": {
+    "n": 5,
+    "top1": 0.9
+   },
+   "arrival_year + occupation + street + town": {
+    "n": 3,
+    "top1": 0.8333333333333334
+   },
+   "occupation + street": {
+    "n": 35,
+    "top1": 0.1954548730329173
+   },
+   "age + arrival_year + occupation + town": {
+    "n": 5,
+    "top1": 1.0
+   },
+   "age + club + club_role": {
+    "n": 3,
+    "top1": 0.7777777777777778
+   },
+   "arrival_year + employer + occupation": {
+    "n": 21,
+    "top1": 0.8401360544217686
+   },
+   "employer + occupation": {
+    "n": 40,
+    "top1": 0.14260728553167928
+   },
+   "arrival_year + employer + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + occupation": {
+    "n": 60,
+    "top1": 0.3120438248255585
+   },
+   "arrival_year": {
+    "n": 30,
+    "top1": 0.010209133809458633
+   },
+   "age": {
+    "n": 27,
+    "top1": 0.013327926587131864
+   },
+   "age + arrival_year + occupation + street": {
+    "n": 10,
+    "top1": 1.0
+   },
+   "age + occupation + town": {
+    "n": 13,
+    "top1": 0.8653846153846154
+   },
+   "(nothing)": {
+    "n": 53,
+    "top1": 0.00020000000000000006
+   },
+   "arrival_year + club + club_role + employer": {
+    "n": 3,
+    "top1": 1.0
+   },
+   "age + employer": {
+    "n": 9,
+    "top1": 0.2184744268077601
+   },
+   "arrival_year + occupation": {
+    "n": 9,
+    "top1": 0.28304961275975765
+   },
+   "occupation + town": {
+    "n": 9,
+    "top1": 0.1495132460977796
+   },
+   "age + arrival_year + occupation": {
+    "n": 17,
+    "top1": 1.0
+   },
+   "age + employer + occupation": {
+    "n": 19,
+    "top1": 0.9122807017543859
+   },
+   "employer + occupation + street": {
+    "n": 25,
+    "top1": 0.6446666666666667
+   },
+   "occupation": {
+    "n": 36,
+    "top1": 0.008960133956192122
+   },
+   "age + club + club_role + occupation": {
+    "n": 5,
+    "top1": 1.0
+   },
+   "arrival_year + employer + occupation + street": {
+    "n": 11,
+    "top1": 0.9545454545454546
+   },
+   "age + arrival_year + employer + occupation + street": {
+    "n": 4,
+    "top1": 1.0
+   },
+   "occupation + street + town": {
+    "n": 13,
+    "top1": 0.7141025641025641
+   },
+   "town": {
+    "n": 29,
+    "top1": 0.004137052175776534
+   },
+   "age + street": {
+    "n": 10,
+    "top1": 0.23706349206349206
+   },
+   "employer + street + town": {
+    "n": 3,
+    "top1": 0.5555555555555555
+   },
+   "age + occupation + street + town": {
+    "n": 17,
+    "top1": 1.0
+   },
+   "arrival_year + street": {
+    "n": 7,
+    "top1": 0.1719954648526077
+   },
+   "street + town": {
+    "n": 5,
+    "top1": 0.29047619047619044
+   },
+   "employer + street": {
+    "n": 13,
+    "top1": 0.0913491005918276
+   },
+   "club + club_role + employer + town": {
+    "n": 1,
+    "top1": 0.3333333333333333
+   },
+   "age + employer + street": {
+    "n": 4,
+    "top1": 0.875
+   },
+   "employer + occupation + town": {
+    "n": 11,
+    "top1": 0.5000000000000001
+   },
+   "employer": {
+    "n": 23,
+    "top1": 0.0043901623109007665
+   },
+   "employer + town": {
+    "n": 8,
+    "top1": 0.0964256753426008
+   },
+   "club + club_role + occupation + street": {
+    "n": 5,
+    "top1": 0.9
+   },
+   "arrival_year + club + club_role": {
+    "n": 8,
+    "top1": 0.65625
+   },
+   "age + occupation + street": {
+    "n": 31,
+    "top1": 0.7876344086021505
+   },
+   "street": {
+    "n": 25,
+    "top1": 0.0039972610454001
+   },
+   "arrival_year + occupation + street": {
+    "n": 19,
+    "top1": 0.8157894736842105
+   },
+   "age + employer + town": {
+    "n": 3,
+    "top1": 0.8333333333333334
+   },
+   "club + club_role + employer + occupation": {
+    "n": 6,
+    "top1": 0.8611111111111112
+   },
+   "age + club + club_role + employer + occupation + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + arrival_year + occupation + street + town": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "arrival_year + employer + occupation + town": {
+    "n": 3,
+    "top1": 1.0
+   },
+   "arrival_year + employer": {
+    "n": 6,
+    "top1": 0.1328703703703704
+   },
+   "age + arrival_year + employer + occupation": {
+    "n": 6,
+    "top1": 1.0
+   },
+   "age + club + club_role + occupation + street": {
+    "n": 3,
+    "top1": 1.0
+   },
+   "age + street + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "club + club_role + employer": {
+    "n": 1,
+    "top1": 0.125
+   },
+   "age + town": {
+    "n": 8,
+    "top1": 0.26166328600405675
+   },
+   "age + arrival_year + employer": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "arrival_year + employer + street": {
+    "n": 3,
+    "top1": 0.8333333333333334
+   },
+   "arrival_year + occupation + town": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "club + club_role": {
+    "n": 7,
+    "top1": 0.0077044682412469425
+   },
+   "age + arrival_year + town": {
+    "n": 4,
+    "top1": 1.0
+   },
+   "age + club + club_role + occupation + town": {
+    "n": 2,
+    "top1": 0.75
+   },
+   "employer + occupation + street + town": {
+    "n": 4,
+    "top1": 1.0
+   },
+   "arrival_year + employer + occupation + street + town": {
+    "n": 3,
+    "top1": 1.0
+   },
+   "club + club_role + occupation + street + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + club + club_role + employer + occupation + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + arrival_year": {
+    "n": 6,
+    "top1": 0.2888888888888889
+   },
+   "age + club + club_role + employer + occupation": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + arrival_year + club + club_role + employer": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "club + club_role + occupation": {
+    "n": 3,
+    "top1": 0.21428571428571427
+   },
+   "age + arrival_year + club + club_role + occupation + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + club + club_role + employer": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + club + club_role + occupation + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "club + club_role + street": {
+    "n": 3,
+    "top1": 0.75
+   },
+   "arrival_year + town": {
+    "n": 2,
+    "top1": 0.20238095238095238
+   },
+   "club + club_role + town": {
+    "n": 1,
+    "top1": 0.06666666666666667
+   },
+   "age + club + club_role + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + employer + occupation + town": {
+    "n": 7,
+    "top1": 1.0
+   },
+   "age + arrival_year + employer + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + employer + street + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + club + club_role + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "club + club_role + employer + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + arrival_year + street": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "club + club_role + street + town": {
+    "n": 1,
+    "top1": 1.0
+   }
+  },
+  "test/S5_oracle_generalize": {
+   "age_band + employer_type + sector + street": {
+    "n": 10,
+    "top1": 0.4333333333333333
+   },
+   "arrival_year + region + street": {
+    "n": 5,
+    "top1": 0.7666666666666667
+   },
+   "arrival_year + region + sector + street": {
+    "n": 3,
+    "top1": 0.6666666666666666
+   },
+   "sector + street": {
+    "n": 35,
+    "top1": 0.03315786026616058
+   },
+   "age_band + arrival_year + region + sector": {
+    "n": 5,
+    "top1": 0.6066666666666667
+   },
+   "age_band + club + club_role": {
+    "n": 3,
+    "top1": 0.19482758620689655
+   },
+   "arrival_year + employer_type + sector": {
+    "n": 21,
+    "top1": 0.3615852401566687
+   },
+   "employer_type + sector": {
+    "n": 40,
+    "top1": 0.008209141339088507
+   },
+   "arrival_year + employer_type + region": {
+    "n": 1,
+    "top1": 0.25
+   },
+   "age_band + sector": {
+    "n": 60,
+    "top1": 0.01098640737557465
+   },
+   "arrival_year": {
+    "n": 30,
+    "top1": 0.010209133809458633
+   },
+   "age_band": {
+    "n": 27,
+    "top1": 0.0015504325227108423
+   },
+   "age_band + arrival_year + sector + street": {
+    "n": 10,
+    "top1": 0.95
+   },
+   "age_band + region + sector": {
+    "n": 13,
+    "top1": 0.047413603771907176
+   },
+   "(nothing)": {
+    "n": 53,
+    "top1": 0.00020000000000000006
+   },
+   "arrival_year + club + club_role + employer_type": {
+    "n": 3,
+    "top1": 0.8333333333333334
+   },
+   "age_band + employer_type": {
+    "n": 9,
+    "top1": 0.00732353597484372
+   },
+   "arrival_year + sector": {
+    "n": 9,
+    "top1": 0.09363474884630715
+   },
+   "region + sector": {
+    "n": 9,
+    "top1": 0.008477346540529297
+   },
+   "age_band + arrival_year + sector": {
+    "n": 17,
+    "top1": 0.3373949579831933
+   },
+   "age_band + employer_type + sector": {
+    "n": 19,
+    "top1": 0.046242747529373095
+   },
+   "employer_type + sector + street": {
+    "n": 25,
+    "top1": 0.16869209091562035
+   },
+   "sector": {
+    "n": 36,
+    "top1": 0.0017770129408059088
+   },
+   "age_band + club + club_role + sector": {
+    "n": 5,
+    "top1": 0.6666666666666666
+   },
+   "arrival_year + employer_type + sector + street": {
+    "n": 11,
+    "top1": 0.8484848484848485
+   },
+   "age_band + arrival_year + employer_type + sector + street": {
+    "n": 4,
+    "top1": 1.0
+   },
+   "region + sector + street": {
+    "n": 13,
+    "top1": 0.14742618492618492
+   },
+   "region": {
+    "n": 29,
+    "top1": 0.0006569014204760966
+   },
+   "age_band + street": {
+    "n": 10,
+    "top1": 0.03014627268128966
+   },
+   "employer_type + region + street": {
+    "n": 3,
+    "top1": 0.061642061642061645
+   },
+   "age_band + region + sector + street": {
+    "n": 17,
+    "top1": 0.6378151260504202
+   },
+   "arrival_year + street": {
+    "n": 7,
+    "top1": 0.1719954648526077
+   },
+   "region + street": {
+    "n": 5,
+    "top1": 0.028180468337719356
+   },
+   "employer_type + street": {
+    "n": 13,
+    "top1": 0.02307799221128383
+   },
+   "club + club_role + employer_type + region": {
+    "n": 1,
+    "top1": 0.16666666666666666
+   },
+   "age_band + employer_type + street": {
+    "n": 4,
+    "top1": 0.3499331550802139
+   },
+   "employer_type + region + sector": {
+    "n": 11,
+    "top1": 0.025269233520528823
+   },
+   "employer_type": {
+    "n": 23,
+    "top1": 0.001023603204341817
+   },
+   "employer_type + region": {
+    "n": 8,
+    "top1": 0.005493743985102056
+   },
+   "club + club_role + sector + street": {
+    "n": 5,
+    "top1": 0.6
+   },
+   "arrival_year + club + club_role": {
+    "n": 8,
+    "top1": 0.65625
+   },
+   "age_band + sector + street": {
+    "n": 31,
+    "top1": 0.21226342179852614
+   },
+   "street": {
+    "n": 25,
+    "top1": 0.0039972610454001
+   },
+   "arrival_year + sector + street": {
+    "n": 19,
+    "top1": 0.6666666666666666
+   },
+   "age_band + employer_type + region": {
+    "n": 3,
+    "top1": 0.07947089947089947
+   },
+   "club + club_role + employer_type + sector": {
+    "n": 6,
+    "top1": 0.5151515151515151
+   },
+   "age_band + club + club_role + employer_type + sector + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age_band + arrival_year + region + sector + street": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "arrival_year + employer_type + region + sector": {
+    "n": 3,
+    "top1": 0.5555555555555555
+   },
+   "arrival_year + employer_type": {
+    "n": 6,
+    "top1": 0.05320572673513851
+   },
+   "age_band + arrival_year + employer_type + sector": {
+    "n": 6,
+    "top1": 0.8055555555555555
+   },
+   "age_band + club + club_role + sector + street": {
+    "n": 3,
+    "top1": 0.8333333333333334
+   },
+   "age_band + region + street": {
+    "n": 1,
+    "top1": 0.5
+   },
+   "club + club_role + employer_type": {
+    "n": 1,
+    "top1": 0.019230769230769232
+   },
+   "age_band + region": {
+    "n": 8,
+    "top1": 0.004562279955541773
+   },
+   "age_band + arrival_year + employer_type": {
+    "n": 2,
+    "top1": 0.225
+   },
+   "arrival_year + employer_type + street": {
+    "n": 3,
+    "top1": 0.5
+   },
+   "arrival_year + region + sector": {
+    "n": 2,
+    "top1": 0.41666666666666663
+   },
+   "club + club_role": {
+    "n": 7,
+    "top1": 0.0077044682412469425
+   },
+   "age_band + arrival_year + region": {
+    "n": 4,
+    "top1": 0.3875
+   },
+   "age_band + club + club_role + region + sector": {
+    "n": 2,
+    "top1": 0.5
+   },
+   "employer_type + region + sector + street": {
+    "n": 4,
+    "top1": 0.5
+   },
+   "arrival_year + employer_type + region + sector + street": {
+    "n": 3,
+    "top1": 0.6666666666666666
+   },
+   "club + club_role + region + sector + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + club + club_role + employer_type + sector + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age_band + arrival_year": {
+    "n": 6,
+    "top1": 0.05587606837606838
+   },
+   "age_band + club + club_role + employer_type + sector": {
+    "n": 1,
+    "top1": 0.5
+   },
+   "age_band + arrival_year + club + club_role + employer_type": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "club + club_role + sector": {
+    "n": 3,
+    "top1": 0.06267806267806268
+   },
+   "age_band + arrival_year + club + club_role + region + sector": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age_band + club + club_role + employer_type": {
+    "n": 1,
+    "top1": 0.25
+   },
+   "arrival_year + club + club_role + sector + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "club + club_role + street": {
+    "n": 3,
+    "top1": 0.75
+   },
+   "arrival_year + region": {
+    "n": 2,
+    "top1": 0.024269005847953218
+   },
+   "club + club_role + region": {
+    "n": 1,
+    "top1": 0.03125
+   },
+   "age_band + club + club_role + region": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age_band + employer_type + region + sector": {
+    "n": 7,
+    "top1": 0.2763569763569763
+   },
+   "age_band + arrival_year + employer_type + street": {
+    "n": 1,
+    "top1": 0.5
+   },
+   "arrival_year + employer_type + region + street": {
+    "n": 1,
+    "top1": 0.5
+   },
+   "arrival_year + club + club_role + region": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "club + club_role + employer_type + street": {
+    "n": 1,
+    "top1": 0.3333333333333333
+   },
+   "age_band + arrival_year + street": {
+    "n": 2,
+    "top1": 0.75
+   },
+   "club + club_role + region + street": {
+    "n": 1,
+    "top1": 0.3333333333333333
+   }
+  },
+  "test/S6_oracle_full": {
+   "age_band + employer_type + sector": {
+    "n": 41,
+    "top1": 0.05284820056217412
+   },
+   "region": {
+    "n": 44,
+    "top1": 0.0007404421617424086
+   },
+   "region + sector": {
+    "n": 28,
+    "top1": 0.007486323187383626
+   },
+   "sector": {
+    "n": 108,
+    "top1": 0.0017325377458482143
+   },
+   "age_band + region + sector": {
+    "n": 40,
+    "top1": 0.05409082966324212
+   },
+   "age_band": {
+    "n": 48,
+    "top1": 0.001433209162860575
+   },
+   "employer_type + sector": {
+    "n": 104,
+    "top1": 0.007872940612404762
+   },
+   "employer_type + region": {
+    "n": 14,
+    "top1": 0.005039967176323796
+   },
+   "age_band + sector": {
+    "n": 126,
+    "top1": 0.011227123524212183
+   },
+   "(nothing)": {
+    "n": 133,
+    "top1": 0.00020000000000000004
+   },
+   "employer_type": {
+    "n": 50,
+    "top1": 0.0010301270899092886
+   },
+   "age_band + employer_type": {
+    "n": 19,
+    "top1": 0.00880946410922476
+   },
+   "employer_type + region + sector": {
+    "n": 21,
+    "top1": 0.025102516384560375
+   },
+   "age_band + employer_type + region": {
+    "n": 3,
+    "top1": 0.07947089947089947
+   },
+   "age_band + region": {
+    "n": 14,
+    "top1": 0.007527147705553841
+   },
+   "age_band + employer_type + region + sector": {
+    "n": 7,
+    "top1": 0.2763569763569763
+   }
+  },
+  "test_shifted/S3_trained_detector": {
+   "occupation": {
+    "n": 37,
+    "top1": 0.0052718558651820005
+   },
+   "age": {
+    "n": 139,
+    "top1": 0.01249421503135401
+   },
+   "(nothing)": {
+    "n": 618,
+    "top1": 0.00020000000000000004
+   },
+   "age + occupation": {
+    "n": 2,
+    "top1": 0.2222222222222222
+   },
+   "club_role": {
+    "n": 4,
+    "top1": 0.0006591957811470006
+   }
+  },
+  "test_shifted/S2_ner": {
+   "name + occupation + street": {
+    "n": 6,
+    "top1": 1.0
+   },
+   "age + club_role + occupation": {
+    "n": 6,
+    "top1": 0.5138888888888888
+   },
+   "occupation": {
+    "n": 159,
+    "top1": 0.007628800703385907
+   },
+   "age + occupation": {
+    "n": 124,
+    "top1": 0.3248256732840497
+   },
+   "arrival_year": {
+    "n": 43,
+    "top1": 0.009856757061358594
+   },
+   "age + name + occupation + street": {
+    "n": 5,
+    "top1": 1.0
+   },
+   "(nothing)": {
+    "n": 115,
+    "top1": 0.00020000000000000004
+   },
+   "arrival_year + occupation": {
+    "n": 57,
+    "top1": 0.3212581349965251
+   },
+   "age": {
+    "n": 61,
+    "top1": 0.015256649185472433
+   },
+   "employer + occupation": {
+    "n": 3,
+    "top1": 0.20211161387631973
+   },
+   "employer + name + occupation": {
+    "n": 6,
+    "top1": 0.9166666666666666
+   },
+   "employer + street": {
+    "n": 2,
+    "top1": 0.08571428571428572
+   },
+   "age + arrival_year + occupation": {
+    "n": 29,
+    "top1": 0.9425287356321839
+   },
+   "arrival_year + employer + occupation": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "age + name": {
+    "n": 5,
+    "top1": 1.0
+   },
+   "club_role": {
+    "n": 26,
+    "top1": 0.0009105438128073676
+   },
+   "age + club_role": {
+    "n": 2,
+    "top1": 0.1875
+   },
+   "age + name + occupation": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "age + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + employer + street": {
+    "n": 1,
+    "top1": 0.5
+   },
+   "age + employer + name + occupation + street": {
+    "n": 4,
+    "top1": 1.0
+   },
+   "employer + occupation + street": {
+    "n": 4,
+    "top1": 0.7083333333333333
+   },
+   "age + occupation + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + occupation + street": {
+    "n": 3,
+    "top1": 0.8333333333333334
+   },
+   "employer + name": {
+    "n": 9,
+    "top1": 0.9444444444444444
+   },
+   "arrival_year + street": {
+    "n": 2,
+    "top1": 0.41666666666666663
+   },
+   "employer + name + occupation + street": {
+    "n": 4,
+    "top1": 1.0
+   },
+   "arrival_year + employer + name + town": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "age + street + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + arrival_year": {
+    "n": 15,
+    "top1": 0.44222222222222224
+   },
+   "club_role + occupation": {
+    "n": 12,
+    "top1": 0.032987165146681104
+   },
+   "arrival_year + name + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + club + club_role + name": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "name": {
+    "n": 2,
+    "top1": 0.29166666666666663
+   },
+   "club + club_role": {
+    "n": 1,
+    "top1": 0.0078125
+   },
+   "town": {
+    "n": 1,
+    "top1": 0.0008873114463176575
+   },
+   "arrival_year + occupation + street + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + employer + name + occupation": {
+    "n": 4,
+    "top1": 1.0
+   },
+   "age + arrival_year + name + occupation + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "occupation + street": {
+    "n": 3,
+    "top1": 0.2063492063492063
+   },
+   "street": {
+    "n": 3,
+    "top1": 0.003922336334527213
+   },
+   "occupation + town": {
+    "n": 1,
+    "top1": 0.05263157894736842
+   },
+   "arrival_year + name + occupation + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "employer + name + town": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "age + arrival_year + club + club_role + name + occupation": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + employer + occupation + street": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "name + occupation + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + club_role + occupation": {
+    "n": 3,
+    "top1": 1.0
+   },
+   "name + occupation": {
+    "n": 4,
+    "top1": 0.75
+   },
+   "club + club_role + employer + occupation + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + employer + occupation": {
+    "n": 3,
+    "top1": 0.6666666666666666
+   },
+   "club + club_role + employer + occupation": {
+    "n": 2,
+    "top1": 0.75
+   },
+   "age + arrival_year + employer + occupation": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + arrival_year + name + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "club + club_role + name + occupation + street": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "name + street": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "age + arrival_year + name": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "employer": {
+    "n": 1,
+    "top1": 0.0017452006980802793
+   },
+   "arrival_year + name + street + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + club + club_role + name + occupation": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "club + club_role + occupation + street + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + employer + name + occupation": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "age + club + club_role + name + occupation + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + employer + occupation + street + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + arrival_year + employer": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + club_role": {
+    "n": 2,
+    "top1": 0.03229166666666666
+   },
+   "age + arrival_year + club_role + occupation": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + arrival_year + name + occupation": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "name + occupation + street + town": {
+    "n": 3,
+    "top1": 1.0
+   },
+   "arrival_year + name": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "employer + name + occupation + street + town": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "employer + town": {
+    "n": 2,
+    "top1": 0.14583333333333331
+   },
+   "employer + occupation + town": {
+    "n": 1,
+    "top1": 0.1
+   },
+   "age + name + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "employer + occupation + street + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + employer + name": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + occupation + town": {
+    "n": 3,
+    "top1": 0.8333333333333334
+   },
+   "age + employer + name + occupation + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "name + street + town": {
+    "n": 2,
+    "top1": 1.0
+   },
+   "age + arrival_year + employer + name": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + arrival_year + name + occupation + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "club + club_role + employer + name + occupation": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "arrival_year + employer + name + occupation + street": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "club + club_role + street": {
+    "n": 1,
+    "top1": 0.125
+   },
+   "arrival_year + name + occupation + street + town": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "age + employer + name": {
+    "n": 1,
+    "top1": 1.0
+   },
+   "employer + name + street": {
+    "n": 1,
+    "top1": 1.0
+   }
+  }
+ },
+ "s5_quasi_kept_by_attr": {
+  "age": 57
+ },
+ "tradeoff": {
+  "test": {
+   "spearman_reid_vs_similarity": 1.0,
+   "order_by_reid": [
+    "S0",
+    "S1",
+    "S4",
+    "S2",
+    "S5",
+    "S6",
+    "S3"
+   ]
+  },
+  "test_shifted": {
+   "spearman_reid_vs_similarity": 1.0,
+   "order_by_reid": [
+    "S0",
+    "S1",
+    "S4",
+    "S2",
+    "S5",
+    "S6",
+    "S3"
+   ]
+  }
+ },
+ "probe_conditions": {
+  "phrasing_seen/values_seen": {
+   "S0_none": {
+    "point": 0.8631748724155469,
+    "lo": 0.8401657552813675,
+    "hi": 0.8832507329576359,
+    "n": 800
+   },
+   "S1_regex": {
+    "point": 0.7123108506132125,
+    "lo": 0.6842158115170269,
+    "hi": 0.7404868198127565,
+    "n": 800
+   },
+   "S2_ner": {
+    "point": 0.2794538761503004,
+    "lo": 0.2537288863525015,
+    "hi": 0.3052635906992538,
+    "n": 800
+   },
+   "S3_trained_detector": {
+    "point": 0.00020000000000000004,
+    "lo": 0.00020000000000000004,
+    "hi": 0.00020000000000000004,
+    "n": 800
+   },
+   "S4_oracle_direct": {
+    "point": 0.4292415168509015,
+    "lo": 0.40211214227262476,
+    "hi": 0.4577624050481132,
+    "n": 800
+   },
+   "S5_oracle_generalize": {
+    "point": 0.19001535256259444,
+    "lo": 0.16988216412269536,
+    "hi": 0.21124347450954645,
+    "n": 800
+   },
+   "S6_oracle_full": {
+    "point": 0.012729259469945374,
+    "lo": 0.010443540245882841,
+    "hi": 0.015382958789905124,
+    "n": 800
+   }
+  },
+  "phrasing_unseen/values_seen": {
+   "S0_none": {
+    "point": 0.8909495643984187,
+    "lo": 0.8709875847799696,
+    "hi": 0.9107034302940431,
+    "n": 800
+   },
+   "S1_regex": {
+    "point": 0.7716683010743995,
+    "lo": 0.7441865372206328,
+    "hi": 0.7978170868241832,
+    "n": 800
+   },
+   "S2_ner": {
+    "point": 0.2779099967511354,
+    "lo": 0.25088715702472947,
+    "hi": 0.30653716040814055,
+    "n": 800
+   },
+   "S3_trained_detector": {
+    "point": 0.003128044729923717,
+    "lo": 0.002322967792758423,
+    "hi": 0.004350889825585809,
+    "n": 800
+   },
+   "S4_oracle_direct": {
+    "point": 0.4325618769730326,
+    "lo": 0.4013417521387828,
+    "hi": 0.46375273797922056,
+    "n": 800
+   },
+   "S5_oracle_generalize": {
+    "point": 0.17214643251894224,
+    "lo": 0.1517270945409955,
+    "hi": 0.19224306310440237,
+    "n": 800
+   },
+   "S6_oracle_full": {
+    "point": 0.013385184410789586,
+    "lo": 0.010947335493055812,
+    "hi": 0.016286224344096583,
+    "n": 800
+   }
+  },
+  "phrasing_seen/values_unseen": {
+   "S0_none": {
+    "point": 0.861568691245632,
+    "lo": 0.839061944804512,
+    "hi": 0.8836199390125792,
+    "n": 800
+   },
+   "S1_regex": {
+    "point": 0.7226005022781663,
+    "lo": 0.6938667260096599,
+    "hi": 0.7496003684820542,
+    "n": 800
+   },
+   "S2_ner": {
+    "point": 0.27000542340136835,
+    "lo": 0.24123866664855492,
+    "hi": 0.29778272991961413,
+    "n": 800
+   },
+   "S3_trained_detector": {
+    "point": 0.00020000000000000004,
+    "lo": 0.00020000000000000004,
+    "hi": 0.00020000000000000004,
+    "n": 800
+   },
+   "S4_oracle_direct": {
+    "point": 0.44304483537555045,
+    "lo": 0.41025533187003305,
+    "hi": 0.473030112896992,
+    "n": 800
+   },
+   "S5_oracle_generalize": {
+    "point": 0.18253501631699393,
+    "lo": 0.1600230085368212,
+    "hi": 0.2054938325186492,
+    "n": 800
+   },
+   "S6_oracle_full": {
+    "point": 0.012950228568156166,
+    "lo": 0.01024240191294753,
+    "hi": 0.01646984359401295,
+    "n": 800
+   }
+  },
+  "phrasing_unseen/values_unseen": {
+   "S0_none": {
+    "point": 0.8688845662199445,
+    "lo": 0.8485190122413866,
+    "hi": 0.8891321096539636,
+    "n": 800
+   },
+   "S1_regex": {
+    "point": 0.7442357353086294,
+    "lo": 0.7180654827293559,
+    "hi": 0.7710329363361649,
+    "n": 800
+   },
+   "S2_ner": {
+    "point": 0.26862884838552953,
+    "lo": 0.24300435770713658,
+    "hi": 0.2961125635702788,
+    "n": 800
+   },
+   "S3_trained_detector": {
+    "point": 0.004733681815942844,
+    "lo": 0.0026533168325443435,
+    "hi": 0.008009321374436653,
+    "n": 800
+   },
+   "S4_oracle_direct": {
+    "point": 0.4099619278942448,
+    "lo": 0.38075996200613593,
+    "hi": 0.43788170072869814,
+    "n": 800
+   },
+   "S5_oracle_generalize": {
+    "point": 0.15991696267459943,
+    "lo": 0.13925393536046854,
+    "hi": 0.1790161978557851,
+    "n": 800
+   },
+   "S6_oracle_full": {
+    "point": 0.013325199195768946,
+    "lo": 0.010792845809454974,
+    "hi": 0.016096387940027355,
+    "n": 800
+   }
+  }
+ }
+}

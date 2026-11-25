@@ -20,6 +20,7 @@ import matplotlib  # noqa: E402
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.ticker  # noqa: E402,F401
 import numpy as np  # noqa: E402
 
 from spl import population as P  # noqa: E402
@@ -136,9 +137,12 @@ h1 = S["S4_oracle_direct"][f"link_top1_{POOL}"]
 verdicts["H1"] = ("supported" if h1["lo"] > 0.20 else "not supported",
                   f"S4 linkage top-1 = {fmt(h1)}; rule: lower bound > 0.20.")
 d23 = paired_ci(link("S2_ner"), link("S3_trained_detector"))
-verdicts["H2"] = ("supported in-distribution only (see section 4)" if d23["lo"] > 0 else "not supported",
-                  f"S2 − S3 linkage top-1 = {fmt(d23)} (paired); rule: lower bound > 0. Post-hoc qualification: "
-                  "S3 was tested on the phrasings it was trained on.")
+d23s = paired_ci([r[f"link_top1_{POOL}"] for r in pt2[("test_shifted", "S2_ner")]],
+                 [r[f"link_top1_{POOL}"] for r in pt2[("test_shifted", "S3_trained_detector")]])
+verdicts["H2"] = ("supported" if d23["lo"] > 0 else "not supported",
+                  f"S2 − S3 linkage top-1 = {fmt(d23)} (paired); rule: lower bound > 0. S3 was tested on the "
+                  f"phrasings it was trained on; on unseen phrasings (post-hoc) the difference is {fmt(d23s)}.")
+A["h2_shifted_diff"] = d23s
 u1 = {k: S[k]["category_macro_f1"]["point"] for k in STRATS}
 u2 = {k: S[k]["task_fact_preserved"]["point"] for k in STRATS}
 red = {k: 1 - S[k][f"link_top1_{POOL}"]["point"] / S["S0_none"][f"link_top1_{POOL}"]["point"] for k in STRATS}
@@ -154,10 +158,9 @@ for k in STRATS:
     h4ok[k] = all(a > b for a, b in zip(pts, pts[1:])) and d["lo"] > 0
     h4rows.append([k] + [f3(x) for x in pts] + [fmt(d), "yes" if h4ok[k] else "no"])
 fails = [k for k, ok in h4ok.items() if not ok]
-verdicts["H4"] = ("supported for every strategy not at the floor" if all(
-    S[k][f"link_top1_{POOL}"]["point"] < 0.005 for k in fails) else "not supported",
-    "rule: point estimates strictly decrease 1k → 5k → 20k and the paired 1k − 20k difference excludes 0. "
-    f"Fails: {', '.join(fails) or 'none'} (re-identification already ≤ 0.001 at every size).")
+verdicts["H4"] = ("supported" if not fails else "not supported for " + ", ".join(fails),
+                  "rule: point estimates strictly decrease 1k → 5k → 20k and the paired 1k − 20k difference "
+                  "excludes 0. Met by every strategy; for S3 the effect is at the floor (≤ 0.001 at every size).")
 table(["Hypothesis", "Verdict", "Evidence"], [[k, v[0], v[1]] for k, v in verdicts.items()])
 md.append("")
 md.append("H4 detail (linkage top-1 by register size):")
@@ -321,9 +324,23 @@ def masked_precision(split):
 
 
 prec = {s: masked_precision(s) for s in ("test", "test_shifted")}
+over = collections.Counter()
+for t in DATA["test_shifted"]:
+    gold = [(s_["start"], s_["end"]) for s_ in t["spans"] if s_["level"] != "task"]
+    for a, b in S3SPANS[("test_shifted", t["tid"])]:
+        if not any(g0 <= a and b <= g1 for g0, g1 in gold):
+            txt = t["text"][a:b].lower()
+            over["<name> writing" if txt.endswith(" writing") else txt] += 1
+A["s3_overmasked_shifted"] = dict(over.most_common(10))
 A["s3_char_precision"] = prec
 md += ["", f"Character-level precision of S3's predicted spans (share of masked non-space characters that are "
-       f"identity characters): original {prec['test']:.3f}, shifted {prec['test_shifted']:.3f}."]
+       f"identity characters): original {prec['test']:.3f}, shifted {prec['test_shifted']:.3f}.", "",
+       "Most frequent S3 predicted spans on the shifted set that are not entirely inside a gold identity span "
+       "('<name> writing' = the name masked together with the following word): "
+       + ", ".join(f"'{k}' ({v})" for k, v in over.most_common(6)) + ". The house number in 'the <occupation> at "
+       "number 12' is a literal of the template and therefore not annotated as identity; masking it is arguably "
+       "correct and is a limitation of the annotation scheme, not of the detector. 'trade' ('by trade') and 'door' "
+       "('the green door') are genuine over-masking."]
 
 # ---- 5. residual risk (post-hoc) -----------------------------------------------------------------------------
 h("5. What re-identifies the author after anonymization (run 2)", "Post-hoc. For each anonymized ticket, the "
@@ -359,20 +376,50 @@ A["s5_quasi_kept_by_attr"] = dict(fp)
 # ---- 6. privacy-utility (post-hoc framing of preregistered + post-hoc measures) --------------------------------
 h("6. Privacy–utility trade-off (run 2)", "Post-hoc summary. Re-identification and semantic similarity are "
   "preregistered measures; 'other words kept' (share of non-identity words still present, a direct measure of "
-  "over-masking) is post-hoc. A strategy is listed as non-dominated if no other strategy has both lower "
-  "re-identification and higher 'other words kept' on the same test set.")
+  "over-masking) is post-hoc. On the original phrasings no strategy deletes non-identity words, so "
+  "'other words kept' is 1.000 everywhere and cannot rank strategies; the trade-off is summarized with semantic "
+  "similarity: the Spearman rank correlation between linkage top-1 and semantic similarity across the seven "
+  "strategies (+1 means that every gain in privacy is paid for in similarity, in the same order). Semantic "
+  "similarity also falls when identity spans are removed, which is the intended effect, so it mixes privacy gain "
+  "with utility loss; 'other words kept' isolates the loss of non-identity content.")
 A["tradeoff"] = {}
 for split in ("test", "test_shifted"):
     R = res2["strategies"] if split == "test" else res2["shifted"]
-    pts = {k: (R[k][f"link_top1_{POOL}"]["point"], R[k]["other_word_retention"]["point"]) for k in STRATS}
-    nd = [k for k in STRATS if not any(pts[j][0] < pts[k][0] and pts[j][1] > pts[k][1] for j in STRATS)]
-    A["tradeoff"][split] = {"points": pts, "non_dominated": nd}
-    md += ["", f"**{'Shifted' if split == 'test_shifted' else 'Original'} test set**", ""]
-    table(["Strategy", "Linkage top-1", "Dense top-1", "Other words kept", "Semantic similarity", "Non-dominated"],
+    x = np.array([R[k][f"link_top1_{POOL}"]["point"] for k in STRATS])
+    y = np.array([R[k]["semantic_similarity"]["point"] for k in STRATS])
+    rho = float(np.corrcoef(np.argsort(np.argsort(x)), np.argsort(np.argsort(y)))[0, 1])
+    order = [SHORT[k].split()[0] for k in np.array(STRATS)[np.argsort(-x)]]
+    A["tradeoff"][split] = {"spearman_reid_vs_similarity": rho, "order_by_reid": order}
+    md += ["", f"**{'Shifted' if split == 'test_shifted' else 'Original'} test set** — strategies from most to least "
+           f"re-identifiable: {' > '.join(order)}; Spearman ρ(linkage top-1, semantic similarity) = {rho:.2f}.", ""]
+    table(["Strategy", "Linkage top-1", "Dense top-1", "Other words kept", "Semantic similarity"],
           [[k, fmt(R[k][f"link_top1_{POOL}"]), fmt(R[k]["dense_top1"]), fmt(R[k]["other_word_retention"]),
-            fmt(R[k]["semantic_similarity"]), "yes" if k in nd else ""] for k in STRATS])
+            fmt(R[k]["semantic_similarity"])] for k in STRATS])
 md += ["", "Oracle strategies (S4–S6) use gold spans; they show what a perfect detector with that masking policy "
        "would achieve, not what any system achieves."]
+
+PROBE = ROOT / "results/probe_unseen_values/results.json"
+probe = json.loads(PROBE.read_text())["results"] if PROBE.exists() else None
+if probe:
+    h("7. Phrasing × values: is S3 memorizing the attribute values? (probe)", "Post-hoc probe "
+      "(`scripts/probe_unseen_values.py`, results in `results/probe_unseen_values/`). Run 2's shifted set changes "
+      "phrasing but reuses the closed vocabulary of values seen in training. The probe draws a new population whose "
+      "names, towns, occupations, employers, clubs and streets are all new, and applies the run-2 S3 model without "
+      "retraining. Ages, arrival years and club roles keep their original ranges.")
+    COND = [("seen", "seen", res2["strategies"]), ("unseen", "seen", res2["shifted"]),
+            ("seen", "unseen", {k: probe[f"values_unseen/{k}"] for k in STRATS}),
+            ("unseen", "unseen", {k: probe[f"values_unseen_shifted/{k}"] for k in STRATS})]
+    table(["Strategy"] + [f"phrasing {a}, values {b}" for a, b, _ in COND],
+          [[k] + [fmt(R[k][f"link_top1_{POOL}"]) for _, _, R in COND] for k in STRATS])
+    md.append("")
+    table(["S3: share of spans kept"] + [f"phrasing {a}, values {b}" for a, b, _ in COND],
+          [[m.replace("leak_", "")] + [fmt(R["S3_trained_detector"][m]) for _, _, R in COND]
+           for m in ("leak_direct", "leak_quasi", "leak_context", "other_word_retention")])
+    A["probe_conditions"] = {f"phrasing_{a}/values_{b}": {k: R[k][f"link_top1_{POOL}"] for k in STRATS}
+                             for a, b, R in COND}
+    md += ["", "The value-memorization explanation is not supported: with new values and the original phrasings S3 "
+           "keeps the same near-zero re-identification. What degrades is phrasing: with unseen phrasings S3 misses "
+           "about half of the ages (see section 4), whether or not the values are new."]
 
 (OUT / "ANALYSIS.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 (OUT / "analysis.json").write_text(json.dumps(A, indent=1, default=str), encoding="utf-8")
@@ -385,72 +432,84 @@ def family_legend(ax, loc="lower right", extra=()):
     ax.legend(handles=hs + list(extra), loc=loc, fontsize=8, handletextpad=0.3)
 
 
-# Figure 1: privacy-utility, both utility measures, original (filled) and shifted (hollow) test sets.
-fig, axes = plt.subplots(1, 2, figsize=(10, 4.3))
-for ax, m, lab in ((axes[0], "other_word_retention", "Other words kept (post-hoc over-masking measure)"),
-                   (axes[1], "semantic_similarity", "Embedding similarity to original text")):
-    for k in STRATS:
-        a, b = res2["strategies"][k], res2["shifted"][k]
-        xa, ya, xb, yb = (a[f"link_top1_{POOL}"]["point"], a[m]["point"], b[f"link_top1_{POOL}"]["point"],
-                          b[m]["point"])
-        c = COL[FAMILY[k]]
-        if abs(xb - xa) > 0.02 or abs(yb - ya) > 0.01:
-            ax.annotate("", (xb, yb), (xa, ya), arrowprops=dict(arrowstyle="-|>", color=c, lw=1, alpha=0.7,
-                                                                shrinkA=5, shrinkB=5))
-        for x, y, filled, d in ((xa, ya, True, a), (xb, yb, False, b)):
-            ax.errorbar(x, y, xerr=[[x - d[f"link_top1_{POOL}"]["lo"]], [d[f"link_top1_{POOL}"]["hi"] - x]],
-                        color=c, lw=0.8, capsize=0, zorder=2)
-            ax.plot(x, y, "o", ms=7, mfc=c if filled else "white", mec=c, mew=1.5, zorder=3)
-        dx, dy = {"S3_trained_detector": (8, -4), "S1_regex": (-10, -12), "S0_none": (-14, -12)}.get(k, (7, 4))
-        ax.annotate(SHORT[k], (xa, ya), textcoords="offset points", xytext=(dx, dy), fontsize=8, color=INK,
-                    ha="right" if dx < 0 else "left")
-    ax.set_xlabel(f"Re-identification: linkage top-1 (register {POOL:,})")
-    ax.set_ylabel(lab)
-    ax.set_xlim(-0.03, 0.97)
 filled = plt.Line2D([], [], marker="o", ls="", color=INK2, ms=6, label="original phrasings")
 hollow = plt.Line2D([], [], marker="o", ls="", mfc="white", mec=INK2, ms=6, label="unseen phrasings (post-hoc)")
-family_legend(axes[0], "lower left", (filled, hollow))
-fig.suptitle("Privacy–utility trade-off. Arrows: change from original to unseen phrasings. Upper left is better.",
-             fontsize=10, x=0.01, ha="left")
+
+
+def pair(ax, xa, xb, y, c):
+    """Original (filled, drawn on top and smaller) and shifted (hollow) value on one row, joined by a line."""
+    ax.plot([xa, xb], [y, y], color=c, lw=1.5, alpha=0.5, zorder=1)
+    ax.plot(xb, y, "o", ms=8, mfc="white", mec=c, mew=1.5, zorder=2)
+    ax.plot(xa, y, "o", ms=4.5, color=c, zorder=3)
+
+
+# Figure 1: privacy vs. semantic similarity, original (filled) and shifted (hollow) test sets.
+fig, ax = plt.subplots(figsize=(7, 4.8))
+for k in STRATS:
+    a, b = res2["strategies"][k], res2["shifted"][k]
+    m = "semantic_similarity"
+    xa, ya, xb, yb = (a[f"link_top1_{POOL}"]["point"], a[m]["point"], b[f"link_top1_{POOL}"]["point"],
+                      b[m]["point"])
+    c = COL[FAMILY[k]]
+    if abs(xb - xa) > 0.02 or abs(yb - ya) > 0.01:
+        ax.annotate("", (xb, yb), (xa, ya), arrowprops=dict(arrowstyle="-|>", color=c, lw=1, alpha=0.7,
+                                                            shrinkA=5, shrinkB=5))
+    for x, y, fill, d in ((xb, yb, False, b), (xa, ya, True, a)):
+        ax.errorbar(x, y, xerr=[[x - d[f"link_top1_{POOL}"]["lo"]], [d[f"link_top1_{POOL}"]["hi"] - x]],
+                    yerr=[[y - d[m]["lo"]], [d[m]["hi"] - y]], color=c, lw=0.8, capsize=0, zorder=2)
+        ax.plot(x, y, "o", ms=7, mfc=c if fill else "white", mec=c, mew=1.5, zorder=3)
+    dx, dy, ha = {"S0_none": (-10, 6, "right"), "S1_regex": (0, -16, "center")}.get(k, (9, 3, "left"))
+    ax.annotate(SHORT[k], (xa, ya), textcoords="offset points", xytext=(dx, dy), fontsize=8, color=INK, ha=ha)
+ax.set_xlabel(f"Re-identification: linkage top-1 (register {POOL:,}); lower is better")
+ax.set_ylabel("Embedding similarity to original text; higher is better")
+ax.set_xlim(-0.03, 0.97)
+family_legend(ax, "lower right", (filled, hollow))
+ax.set_title("Privacy–utility trade-off. Arrows: original → unseen phrasings (post-hoc).", fontsize=10, loc="left")
 fig.tight_layout()
 fig.savefig(OUT / "figures/fig1_privacy_utility.png")
 plt.close(fig)
 
-# Figure 2: generalization — re-identification and surviving spans, original vs shifted (dumbbells).
-fig, axes = plt.subplots(1, 2, figsize=(10, 3.8), gridspec_kw={"width_ratios": [1.1, 1]})
+# Figure 2: generalization — re-identification, surviving spans, and over-masking, original vs shifted.
+fig, axes = plt.subplots(1, 3, figsize=(13, 3.9), gridspec_kw={"width_ratios": [1, 1, 0.8]})
 ax = axes[0]
 for i, k in enumerate(STRATS[::-1]):
     a, b = A["shift"][k][f"link_top1_{POOL}"]["test"], A["shift"][k][f"link_top1_{POOL}"]["test_shifted"]
     c = COL[FAMILY[k]]
-    ax.plot([a["point"], b["point"]], [i, i], color=c, lw=1.5, alpha=0.6)
-    ax.plot(a["point"], i, "o", ms=7, color=c)
-    ax.plot(b["point"], i, "o", ms=7, mfc="white", mec=c, mew=1.5)
     ax.errorbar(b["point"], i, xerr=[[b["point"] - b["lo"]], [b["hi"] - b["point"]]], color=c, lw=0.8)
+    pair(ax, a["point"], b["point"], i, c)
 ax.set_yticks(range(len(STRATS)), [SHORT[k] for k in STRATS[::-1]])
 ax.set_xlabel(f"Linkage top-1 (register {POOL:,})")
 ax.set_title("Re-identification", fontsize=9, loc="left")
 ax.grid(axis="y", visible=False)
 ax.legend(handles=[filled, hollow], loc="lower right", fontsize=8)
 ax = axes[1]
-levels = ["leak_direct", "leak_quasi", "leak_context"]
 ylab = []
 for j, k in enumerate(("S2_ner", "S3_trained_detector")):
-    for i, m in enumerate(levels):
+    for i, m in enumerate(["leak_direct", "leak_quasi", "leak_context"]):
         y = j * 4 + i
-        a, b = A["shift"][k][m]["test"]["point"], A["shift"][k][m]["test_shifted"]["point"]
-        c = COL["detector"]
-        ax.plot([a, b], [y, y], color=c, lw=1.5, alpha=0.6)
-        ax.plot(a, y, "o", ms=7, color=c)
-        ax.plot(b, y, "o", ms=7, mfc="white", mec=c, mew=1.5)
+        pair(ax, A["shift"][k][m]["test"]["point"], A["shift"][k][m]["test_shifted"]["point"], y, COL["detector"])
         ylab.append((y, f"{SHORT[k]} · {m.split('_')[1].replace('context', 'contextual')}"))
 ax.set_yticks([y for y, _ in ylab], [lab for _, lab in ylab])
 ax.invert_yaxis()
 ax.set_xlim(-0.03, 1.03)
 ax.set_xlabel("Share of gold identity spans kept verbatim")
-ax.set_title("Identity spans the detector misses", fontsize=9, loc="left")
+ax.set_title("Identity spans the detectors miss", fontsize=9, loc="left")
 ax.grid(axis="y", visible=False)
-fig.suptitle("Unseen phrasings (post-hoc test set): the trained detector S3 loses most of its advantage",
-             fontsize=10, x=0.01, ha="left")
+ax = axes[2]
+for i, k in enumerate(STRATS[::-1]):
+    a = 1 - A["shift"][k]["other_word_retention"]["test"]["point"]
+    b = 1 - A["shift"][k]["other_word_retention"]["test_shifted"]["point"]
+    pair(ax, a, b, i, COL[FAMILY[k]])
+    if b > 0.005:
+        ax.annotate(f"{b:.1%}", (b, i), textcoords="offset points", xytext=(8, -3), fontsize=8, color=INK)
+ax.set_yticks(range(len(STRATS)), [SHORT[k] for k in STRATS[::-1]])
+ax.set_xlim(-0.002, 0.03)
+ax.xaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1, decimals=0))
+ax.set_xlabel("Non-identity words removed")
+ax.set_title("Over-masking (post-hoc measure)", fontsize=9, loc="left")
+ax.grid(axis="y", visible=False)
+fig.suptitle("Unseen phrasings (post-hoc): S3 still blocks linkage but misses quasi-identifiers (mostly ages) and "
+             "starts to over-mask", fontsize=10, x=0.01, ha="left")
 fig.tight_layout()
 fig.savefig(OUT / "figures/fig2_generalization.png")
 plt.close(fig)
@@ -484,7 +543,8 @@ for k in STRATS:
     c = COL[FAMILY[k]]
     ax.fill_between(xs, lo, hi, color=c, alpha=0.12, lw=0)
     ax.plot(xs, ys, "-o", color=c, lw=2, ms=5)
-    ax.annotate(SHORT[k], (xs[-1], ys[-1]), textcoords="offset points", xytext=(6, 0), va="center", fontsize=8,
+    dy = {"S3_trained_detector": -6, "S6_oracle_full": 6}.get(k, 0)
+    ax.annotate(SHORT[k], (xs[-1], ys[-1]), textcoords="offset points", xytext=(6, dy), va="center", fontsize=8,
                 color=INK)
 ax.set_xscale("log")
 ax.set_xticks(xs, [f"{n:,}" for n in xs])
@@ -494,7 +554,8 @@ ax.set_xlabel("Register size (people the attacker must choose from)")
 ax.set_ylabel("Linkage top-1")
 ax.set_title("Re-identification falls with register size (H4, run 1; S3 tested in-distribution)", fontsize=9,
              loc="left")
-family_legend(ax, "upper right")
+ax.legend(handles=[plt.Line2D([], [], marker="o", color=COL[f], lw=2, ms=5, label=FAMILY_LABEL[f]) for f in COL],
+          loc="upper center", bbox_to_anchor=(0.45, -0.17), ncol=3, fontsize=8)
 fig.tight_layout()
 fig.savefig(OUT / "figures/fig4_register_size.png")
 plt.close(fig)
