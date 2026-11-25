@@ -3,14 +3,14 @@
 ## State (2026-11-25)
 | Step | Status | Output |
 |---|---|---|
-| Generator, strategies S0–S6, attacks A1/A2, 8 tests | done | `src/spl/`, `tests/` |
-| Run 1 (preregistered measurements) | done | `results/run1_preregistered_only/` |
-| Run 2 (adds shifted-phrasing test set + over-masking metric) | **not run** (interrupted; smoke test passed) | — |
-| README results, report | **not written** | `README.md` |
+| Generator, strategies S0–S6, attacks A1/A2, tests | done | `src/spl/`, `tests/` |
+| Run 1 (preregistered measurements) | done, frozen | `results/run1_preregistered_only/` |
+| Run 2 (run 1 reproduced + shifted-phrasing test set + over-masking metric) | done | `results/run2/` |
+| Post-hoc probe with unseen attribute values | done | `results/probe_unseen_values/` |
+| Analyses and figures | done | `results/analysis/` (`scripts/analyze.py`) |
+| README, technical report, study guide | done | `README.md`, `docs/REPORT.md`, `docs/STUDY_GUIDE.md` |
 
-Run 1 findings to keep in mind: S3 (trained detector) reaches 0.000 re-identification only in-distribution (same
-templates as training) — run 2 tests it on unseen phrasings; category macro-F1 is saturated at 1.000 for all
-strategies, so embedding similarity and "other words kept" are the informative utility measures.
+Hardware used for run 2: 4 CPU threads, 15 GB RAM, no GPU; run 2 took 802 s, the probe about 3 minutes.
 
 ## Environment and run
 ```bash
@@ -18,11 +18,12 @@ python -m venv .venv && source .venv/bin/activate
 pip install --index-url https://download.pytorch.org/whl/cpu torch==2.5.1
 pip install -r requirements.txt
 python -m pytest -q
-python scripts/run_experiment.py        # ~40 min on 6 CPU threads; regenerates identical data (seeded)
+python scripts/analyze.py                  # seconds; regenerates results/analysis/ from saved outputs
 ```
+Do not re-run `scripts/run_experiment.py` into `results/run1_preregistered_only/`. A full re-run is only needed to
+verify reproducibility (`SPL_THREADS=4 python scripts/run_experiment.py configs/experiment.json <new dir>`).
 
-## Resume prompt for Claude Code on the web
-> Read CLAUDE.md and CLOUD_RESUME.md. Check pytest passes, run `python scripts/run_experiment.py` once, commit
-> results/ (not logs). Then write the README "Results" section and docs/REPORT.md strictly from results/RESULTS.md
-> and results/run1_preregistered_only/, state which preregistered hypotheses (H1–H4) are supported, mark post-hoc
-> analyses, and list limitations. Do not change the data generator or the preregistration.
+## Possible next steps (not started)
+- S3 with several training seeds, to put seed variation into the intervals.
+- A pattern-free attacker stronger than A2 (e.g. an LLM reading the anonymized ticket against the register).
+- Free-text tickets beyond templates.

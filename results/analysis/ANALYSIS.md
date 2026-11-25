@@ -116,21 +116,21 @@ Share of identity spans still present verbatim, by the template that produced th
 | **unseen** | `Our flat is in {town}.` | 178 | 0.174 | 0.000 |
 | **unseen** | `My job as a {occupation} keeps me away during the day.` | 123 | 1.000 | 0.000 |
 
-S3 on the shifted set, by attribute (share of spans kept) and by casing:
+Share of spans kept by attribute (S2 and S3), and linkage top-1 by casing on the shifted set:
 
-| Attribute | Spans (shifted) | S3 kept, original | S3 kept, shifted |
-|---|---|---|---|
-| name | 614 | 0.000 | 0.000 |
-| email | 174 | 0.000 | 0.000 |
-| phone | 192 | 0.000 | 0.000 |
-| age | 286 | 0.013 | 0.507 |
-| town | 178 | 0.000 | 0.000 |
-| occupation | 481 | 0.000 | 0.081 |
-| employer | 298 | 0.000 | 0.000 |
-| club | 66 | 0.000 | 0.000 |
-| club_role | 66 | 0.000 | 0.061 |
-| arrival_year | 182 | 0.000 | 0.000 |
-| street | 300 | 0.000 | 0.000 |
+| Attribute | Spans (shifted) | S2 kept, original | S2 kept, shifted | S3 kept, original | S3 kept, shifted |
+|---|---|---|---|---|---|
+| name | 614 | 0.211 | 0.187 | 0.000 | 0.000 |
+| email | 174 | 0.000 | 0.000 | 0.000 | 0.000 |
+| phone | 192 | 0.000 | 0.000 | 0.000 | 0.000 |
+| age | 286 | 1.000 | 1.000 | 0.013 | 0.507 |
+| town | 178 | 0.193 | 0.174 | 0.000 | 0.000 |
+| occupation | 481 | 1.000 | 1.000 | 0.000 | 0.081 |
+| employer | 298 | 0.189 | 0.235 | 0.000 | 0.000 |
+| club | 66 | 0.234 | 0.212 | 0.000 | 0.000 |
+| club_role | 66 | 1.000 | 1.000 | 0.000 | 0.061 |
+| arrival_year | 182 | 1.000 | 1.000 | 0.000 | 0.000 |
+| street | 300 | 0.236 | 0.223 | 0.000 | 0.000 |
 
 | Strategy | Casing | n | Linkage top-1, shifted |
 |---|---|---|---|

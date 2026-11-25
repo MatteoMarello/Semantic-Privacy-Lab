@@ -11,7 +11,19 @@ holding a population register can still find the author of a text (privacy), and
 (utility). Synthetic data is used because it is the only way to know the true author and every identifying span
 exactly.
 
-## 2. Pipeline, step by step
+## 2. The results in five sentences
+1. Perfectly masking names, e-mails and phones (S4) still lets the attacker find 43% of authors: the policy, not
+   detection, is the problem (H1).
+2. Generalizing quasi-identifiers (S5) and deleting contextual clues (S6) lower this to 19% and 1.3%, but authors
+   whose generalized attributes are rare stay more exposed.
+3. Off-the-shelf NER (S2, 28%) beats S4 because it masks towns and employers too, but it never masks ages,
+   occupations, arrival years or club roles, and largely fails on lowercase text (65% re-identified).
+4. A detector trained on in-domain spans (S3) reaches ≈0% even on unseen phrasings and unseen values, but misses half
+   of the ages in two unseen templates and starts deleting harmless words.
+5. Every reduction in re-identification costs embedding similarity, in exactly the same order (ρ = 1.00); deletion
+   of non-identity words only appears for S3 on unseen phrasings.
+
+## 3. Pipeline, step by step
 
 | Step | What happens | Code |
 |---|---|---|
@@ -75,7 +87,7 @@ exactly.
   author) appears in both arms, and the bootstrap resamples pairs. This removes between-author variation from the
   comparison.
 
-## 3. What was preregistered and what was not
+## 4. What was preregistered and what was not
 
 | Item | Status |
 |---|---|
@@ -85,7 +97,8 @@ exactly.
 | Operational definition of "rarity" | Chosen after run 1 (generalized quasi-identifier class size in the 5k register) |
 | Shifted-phrasing test set, "other words kept" | Post-hoc, motivated by two run-1 observations (S3 saturating at 0.000; U1 saturating at 1.000) |
 | Attacker patterns for the shifted phrasings | Added together with the shifted set; run 2 verifies that run-1 numbers are reproduced exactly, so the change does not affect the preregistered results |
-| Template-level, attribute-level and residual-risk breakdowns, trade-off frontier | Post-hoc, exploratory |
+| Unseen-values probe (`scripts/probe_unseen_values.py`) | Post-hoc, exploratory |
+| Template-level, attribute-level and residual-risk breakdowns, trade-off rank correlation | Post-hoc, exploratory |
 
 A caveat to state openly: the repository's git history was committed in one batch (all early commits carry the same
 timestamp), so git does not independently prove that the preregistration predates the results. The order of the
@@ -96,7 +109,7 @@ should be used for future studies.
 Post-hoc analyses are legitimate but are hypothesis-*generating*: they were chosen after seeing data, so their
 intervals should not be read as confirmatory tests.
 
-## 4. Questions a reviewer will ask, with answers
+## 5. Questions a reviewer will ask, with answers
 
 **"Synthetic templates are not real text. Why should I believe anything here?"**
 The absolute rates are not estimates of real-world risk and the report never claims they are. What the design
@@ -109,10 +122,25 @@ Yes, deliberately: a complete register and patterns that know the phrasings. A d
 strong attacker; a weaker attacker would make every strategy look safer. The dense attacker A2 is the weak,
 pattern-free counterpart and is reported alongside.
 
-**"S3 reaches 0.000 re-identification. Isn't the problem solved?"**
-No. S3 was trained on the same templates as the original test set, so it learned the templates, not the concept of
-an identity mention. On unseen phrasings (post-hoc test set) its performance drops sharply; see the report,
-section "Generalization". This is the main post-hoc result and the reason the shifted set exists.
+**"S3 reaches 0.000 re-identification. Isn't that just memorization of the templates?"**
+That was the concern after run 1, and it is why the shifted set exists. The post-hoc tests do not support it for
+re-identification: on 15 unseen templates S3 stays at 0.003, and on a new population with unseen names, towns,
+occupations, employers, clubs and streets it stays at 0.000 (original phrasings) and 0.005 (unseen phrasings).
+What does degrade is detection in specific phrasings: about half of the ages in unseen templates survive (69% in
+"At {age}, I did not expect this."), and S3 starts to delete harmless words (1.7%). Re-identification stays low
+because an age alone is weak evidence (0.012 when it is the only readable clue). The honest summary is "generalizes
+in aggregate, fails systematically on a few phrasings", and that the setting is favourable to S3 (same generator,
+fixed clue types, short texts).
+
+**"Then why bother with the oracles if S3 beats them?"**
+S3 is compared with S6 under a different policy: S3 masks every identity span completely, S6 generalizes
+quasi-identifiers (keeps "[AGE 30-39]"). S3 buys its lower re-identification with lower similarity (0.765 vs.
+0.813). The oracles answer a question S3 cannot: what each *policy* achieves with perfect detection.
+
+**"Why did you change the hypothesis about S3 after seeing the data?"**
+No preregistered hypothesis was changed. H2 (S2 re-identifies more than S3) is evaluated as preregistered and
+is supported. The value-memorization idea was a post-hoc explanation, tested with a post-hoc probe, and reported as
+not supported.
 
 **"Category macro-F1 is 1.000 for every strategy. Is the utility measure broken?"**
 It is not broken, it is saturated: the category is fully determined by the request sentence, which never overlaps
@@ -147,15 +175,16 @@ a lower bound on how much a template-trained detector can degrade, not a model o
 The preregistered hypotheses are four; the post-hoc tables are many and descriptive. No post-hoc difference is
 presented as a confirmed finding.
 
-## 5. Verify the numbers yourself
+## 6. Verify the numbers yourself
 ```bash
 python -m pytest -q                       # generator, oracle and attacker tests
 python scripts/analyze.py                 # recomputes every table in results/analysis/ from saved outputs (seconds)
-python scripts/run_experiment.py          # full re-run (about 45 min on 4 CPU threads); regenerates identical data
+python scripts/probe_unseen_values.py     # post-hoc probe; retrains S3 (~6 min) unless a saved model is given
+SPL_THREADS=4 python scripts/run_experiment.py configs/experiment.json results/run2   # full re-run, ~15 min on 4 threads
 ```
 Useful checks:
 - `data/manifest.json` holds SHA-256 hashes of every data file; a re-run must reproduce them.
-- `results/analysis/ANALYSIS.md`, section 1, compares run 2's original-test-set numbers with run 1.
+- `results/analysis/ANALYSIS.md`, section 1, compares run 2's original-test-set numbers with run 1 (identical).
 - `results/run2/anonymized.jsonl` contains every anonymized ticket, so any strategy's output can be read directly,
   e.g. `grep '"shift0001"' results/run2/anonymized.jsonl`.
 - A single ticket can be attacked by hand:
@@ -168,7 +197,7 @@ Useful checks:
   print(np.sort(att.scores(text))[-5:])  # best scores; ties at the top form the anonymity set
   ```
 
-## 6. Glossary
+## 7. Glossary
 - **Direct identifier**: a value that identifies a person on its own (name, e-mail, phone).
 - **Quasi-identifier**: a value shared by many people that identifies in combination (age, town, occupation,
   employer).

@@ -290,14 +290,20 @@ md += ["", "Share of identity spans still present verbatim, by the template that
 table(["Template", "Text", "Spans", "S2 NER kept", "S3 trained kept"], rows)
 
 # S3 behaviour on the shifted set: by casing, by attribute, and how much of what it masks is not identity.
-md += ["", "S3 on the shifted set, by attribute (share of spans kept) and by casing:", ""]
-attr_rows = []
+md += ["", "Share of spans kept by attribute (S2 and S3), and linkage top-1 by casing on the shifted set:", ""]
+attr_rows, A["kept_by_attribute"] = [], {}
 for attr in ["name", "email", "phone", "age", "town", "occupation", "employer", "club", "club_role", "arrival_year",
              "street"]:
-    vals = {split: [survives(t, ANON[(split, "S3_trained_detector", t["tid"])], s) for t in DATA[split]
-                    for s in t["spans"] if s["attr"] == attr] for split in ("test", "test_shifted")}
-    attr_rows.append([attr, len(vals["test_shifted"]), f3(np.mean(vals["test"])), f3(np.mean(vals["test_shifted"]))])
-table(["Attribute", "Spans (shifted)", "S3 kept, original", "S3 kept, shifted"], attr_rows)
+    row = [attr, sum(s["attr"] == attr for t in DATA["test_shifted"] for s in t["spans"])]
+    for k in ("S2_ner", "S3_trained_detector"):
+        for split in ("test", "test_shifted"):
+            v = float(np.mean([survives(t, ANON[(split, k, t["tid"])], s) for t in DATA[split] for s in t["spans"]
+                               if s["attr"] == attr]))
+            A["kept_by_attribute"][f"{k}/{split}/{attr}"] = v
+            row.append(f3(v))
+    attr_rows.append(row)
+table(["Attribute", "Spans (shifted)", "S2 kept, original", "S2 kept, shifted", "S3 kept, original",
+       "S3 kept, shifted"], attr_rows)
 md.append("")
 case_rows = []
 for k in ("S2_ner", "S3_trained_detector"):
