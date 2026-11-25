@@ -1,0 +1,86 @@
+{
+ "S0_none": {
+  "test": [
+   "hello, i'm a 55-year-old lecturer. i work at county fire service. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of lantern street. best regards, elif crane",
+   "Hello, You can reach me at jakob.tull28@example.org. I have been a customer since I moved here in 1996. I live in Yarrow. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of Copper Lane. Regards.",
+   "Hello, My house is the blue one at the end of Station Approach. I have been a customer since I moved here in 1988. Please transfer my contract to my new address from 18 July. I live in Elmwick. Thanks in advance."
+  ],
+  "test_shifted": [
+   "hello, everyone on lantern street knows the lecturer at number 12. this is elif crane writing. i will move house on 18 january; how do i close the account? many thanks, elif crane",
+   "Hello, Most evenings I am at the Redfern Drama Group, where I serve as member. Call me back on +00 510 138 6483 if needed. Please transfer my contract to my new address from 18 March. 41 years old and a bus driver by trade, I keep careful records. Kind regards.",
+   "Hello, My employer, Hollin Garage, can confirm my working hours. Everyone on Station Approach knows the lecturer at number 12. Please reply to sara.zorn545@example.org. Could you explain the €117.07 charge on my latest invoice? Call me back on +00 585 545 4077 if needed. Kind regards."
+  ]
+ },
+ "S1_regex": {
+  "test": [
+   "hello, i'm a 55-year-old lecturer. i work at county fire service. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of lantern street. best regards, elif crane",
+   "Hello, You can reach me at [EMAIL]. I have been a customer since I moved here in 1996. I live in Yarrow. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of Copper Lane. Regards.",
+   "Hello, My house is the blue one at the end of Station Approach. I have been a customer since I moved here in 1988. Please transfer my contract to my new address from 18 July. I live in Elmwick. Thanks in advance."
+  ],
+  "test_shifted": [
+   "hello, everyone on lantern street knows the lecturer at number 12. this is elif crane writing. i will move house on 18 january; how do i close the account? many thanks, elif crane",
+   "Hello, Most evenings I am at the Redfern Drama Group, where I serve as member. Call me back on [PHONE] if needed. Please transfer my contract to my new address from 18 March. 41 years old and a bus driver by trade, I keep careful records. Kind regards.",
+   "Hello, My employer, Hollin Garage, can confirm my working hours. Everyone on Station Approach knows the lecturer at number 12. Please reply to [EMAIL]. Could you explain the €117.07 charge on my latest invoice? Call me back on [PHONE] if needed. Kind regards."
+  ]
+ },
+ "S2_ner": {
+  "test": [
+   "hello, i'm a 55-year-old lecturer. i work at county fire service. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of lantern street. best regards, elif crane",
+   "Hello, You can reach me at [EMAIL]. I have been a customer since I moved here in 1996. I live in [LOC]. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of [LOC]. Regards.",
+   "Hello, My house is the blue one at the end of [LOC]. I have been a customer since I moved here in 1988. Please transfer my contract to my new address from 18 July. I live in [LOC]. Thanks in advance."
+  ],
+  "test_shifted": [
+   "hello, everyone on lantern street knows the lecturer at number 12. this is elif crane writing. i will move house on 18 january; how do i close the account? many thanks, elif crane",
+   "Hello, Most evenings I am at the [ORG], where I serve as member. Call me back on [PHONE] if needed. Please transfer my contract to my new address from 18 March. 41 years old and a bus driver by trade, I keep careful records. Kind regards.",
+   "Hello, My employer, [ORG], can confirm my working hours. Everyone on [ORG] knows the lecturer at number 12. Please reply to [EMAIL]. Could you explain the €117.07 charge on my latest invoice? Call me back on [PHONE] if needed. Kind regards."
+  ]
+ },
+ "S3_trained_detector": {
+  "test": [
+   "hello, i'm a [ID]-year-old [ID]. i work at [ID]. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of [ID]. best regards, [ID]",
+   "Hello, You can reach me at [ID]. I have been a customer since I moved here in [ID]. I live in [ID]. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of [ID]. Regards.",
+   "Hello, My house is the blue one at the end of [ID]. I have been a customer since I moved here in [ID]. Please transfer my contract to my new address from 18 July. I live in [ID]. Thanks in advance."
+  ],
+  "test_shifted": [
+   "hello, everyone on [ID] knows the lecturer at number [ID]. this is [ID]. i will move house on 18 january; how do i close the account? many thanks, [ID]",
+   "Hello, Most evenings I am at the [ID], where I serve as [ID]. Call me back on [ID] if needed. Please transfer my contract to my new address from 18 March. 41 years old and a [ID] by trade, I keep careful records. Kind regards.",
+   "Hello, My employer, [ID], can confirm my working hours. Everyone on [ID] knows the lecturer at number [ID]. Please reply to [ID]. Could you explain the €117.07 charge on my latest invoice? Call me back on [ID] if needed. Kind regards."
+  ]
+ },
+ "S4_oracle_direct": {
+  "test": [
+   "hello, i'm a 55-year-old lecturer. i work at county fire service. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of lantern street. best regards, [NAME]",
+   "Hello, You can reach me at [EMAIL]. I have been a customer since I moved here in 1996. I live in Yarrow. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of Copper Lane. Regards.",
+   "Hello, My house is the blue one at the end of Station Approach. I have been a customer since I moved here in 1988. Please transfer my contract to my new address from 18 July. I live in Elmwick. Thanks in advance."
+  ],
+  "test_shifted": [
+   "hello, everyone on lantern street knows the lecturer at number 12. this is [NAME] writing. i will move house on 18 january; how do i close the account? many thanks, [NAME]",
+   "Hello, Most evenings I am at the Redfern Drama Group, where I serve as member. Call me back on [PHONE] if needed. Please transfer my contract to my new address from 18 March. 41 years old and a bus driver by trade, I keep careful records. Kind regards.",
+   "Hello, My employer, Hollin Garage, can confirm my working hours. Everyone on Station Approach knows the lecturer at number 12. Please reply to [EMAIL]. Could you explain the €117.07 charge on my latest invoice? Call me back on [PHONE] if needed. Kind regards."
+  ]
+ },
+ "S5_oracle_generalize": {
+  "test": [
+   "hello, i'm a [AGE 50-59]-year-old [SECTOR education]. i work at [EMPLOYER public body]. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of lantern street. best regards, [NAME]",
+   "Hello, You can reach me at [EMAIL]. I have been a customer since I moved here in 1996. I live in [REGION West]. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of Copper Lane. Regards.",
+   "Hello, My house is the blue one at the end of Station Approach. I have been a customer since I moved here in 1988. Please transfer my contract to my new address from 18 July. I live in [REGION North]. Thanks in advance."
+  ],
+  "test_shifted": [
+   "hello, everyone on lantern street knows the [SECTOR education] at number 12. this is [NAME] writing. i will move house on 18 january; how do i close the account? many thanks, [NAME]",
+   "Hello, Most evenings I am at the Redfern Drama Group, where I serve as member. Call me back on [PHONE] if needed. Please transfer my contract to my new address from 18 March. [AGE 40-49] years old and a [SECTOR transport] by trade, I keep careful records. Kind regards.",
+   "Hello, My employer, [EMPLOYER small business], can confirm my working hours. Everyone on Station Approach knows the [SECTOR education] at number 12. Please reply to [EMAIL]. Could you explain the €117.07 charge on my latest invoice? Call me back on [PHONE] if needed. Kind regards."
+  ]
+ },
+ "S6_oracle_full": {
+  "test": [
+   "hello, i'm a [AGE 50-59]-year-old [SECTOR education]. i work at [EMPLOYER public body]. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of [REDACTED]. best regards, [NAME]",
+   "Hello, You can reach me at [EMAIL]. I have been a customer since I moved here in [REDACTED]. I live in [REGION West]. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of [REDACTED]. Regards.",
+   "Hello, My house is the blue one at the end of [REDACTED]. I have been a customer since I moved here in [REDACTED]. Please transfer my contract to my new address from 18 July. I live in [REGION North]. Thanks in advance."
+  ],
+  "test_shifted": [
+   "hello, everyone on [REDACTED] knows the [SECTOR education] at number 12. this is [NAME] writing. i will move house on 18 january; how do i close the account? many thanks, [NAME]",
+   "Hello, Most evenings I am at the [REDACTED], where I serve as [REDACTED]. Call me back on [PHONE] if needed. Please transfer my contract to my new address from 18 March. [AGE 40-49] years old and a [SECTOR transport] by trade, I keep careful records. Kind regards.",
+   "Hello, My employer, [EMPLOYER small business], can confirm my working hours. Everyone on [REDACTED] knows the [SECTOR education] at number 12. Please reply to [EMAIL]. Could you explain the €117.07 charge on my latest invoice? Call me back on [PHONE] if needed. Kind regards."
+  ]
+ }
+}
