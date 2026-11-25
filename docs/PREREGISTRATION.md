@@ -1,6 +1,8 @@
 # Preregistration: Semantic Privacy Lab
 
-Written on 2026-11-25 before any anonymization or attack was run.
+The protocol is recorded in Git commit `f04d2b1`, before the implementation and archived Run 1 results in
+the commit sequence. The early commits share a timestamp. The repository establishes their order and
+contains no independently timestamped registration.
 
 ## Question
 How much re-identification risk does each anonymization strategy remove, and how much utility does it cost, when

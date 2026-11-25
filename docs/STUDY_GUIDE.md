@@ -91,7 +91,7 @@ exactly.
 
 | Item | Status |
 |---|---|
-| Population, ticket design, strategies S0–S6, attacks A1/A2, metrics top-1/top-5/anonymity set, U1–U3, H1–H4, bootstrap, breakdown by mention level and by rarity | Preregistered (`docs/PREREGISTRATION.md`, written before any attack was run) |
+| Population, ticket design, strategies S0–S6, attacks A1/A2, metrics top-1/top-5/anonymity set, U1–U3, H1–H4, bootstrap, breakdown by mention level and by rarity | Recorded in the [research protocol](PREREGISTRATION.md) |
 | Run 1 results | The preregistered measurements (`results/run1_preregistered_only/`, never modified) |
 | Decision rules for H1–H4 | Written after run 1 (the preregistration states hypotheses, not thresholds); they are the literal reading of each sentence |
 | Operational definition of "rarity" | Chosen after run 1 (generalized quasi-identifier class size in the 5k register) |
@@ -100,11 +100,9 @@ exactly.
 | Unseen-values probe (`scripts/probe_unseen_values.py`) | Post-hoc, exploratory |
 | Template-level, attribute-level and residual-risk breakdowns, trade-off rank correlation | Post-hoc, exploratory |
 
-A caveat to state openly: the repository's git history was committed in one batch (all early commits carry the same
-timestamp), so git does not independently prove that the preregistration predates the results. The order of the
-commits (`f04d2b1` preregistration → `619e1f5` code → `f607d33` post-hoc additions with run 1 archived) and the
-date in the document are the evidence; an external timestamp (e.g. OSF or a dated release) would be stronger and
-should be used for future studies.
+Git records the protocol in `f04d2b1`, the implementation in `619e1f5` and the Run 1 archive with the
+post-hoc additions in `f607d33`. The early commits share a timestamp, so they establish repository order.
+An independently timestamped registration is unavailable.
 
 Post-hoc analyses are legitimate but are hypothesis-*generating*: they were chosen after seeing data, so their
 intervals should not be read as confirmatory tests.

@@ -48,7 +48,10 @@ Full rationale, threat model and metric definitions are in [`STUDY_GUIDE.md`](ST
   templates absent from training. A post-hoc probe then applied the run-2 detector to a new population whose
   names, towns, occupations, employers, clubs and streets are all new.
 
-## 3. Preregistered results (run 1)
+## 3. Results from the registered protocol (run 1)
+
+The Git history places the [protocol](PREREGISTRATION.md) before the implementation and the Run 1 archive.
+These early commits share a timestamp. The decision rules for H1–H4 were specified after Run 1.
 
 | Strategy | Linkage top-1 | Linkage top-5 | Dense top-1 | Median anonymity set | Semantic similarity |
 |---|---|---|---|---|---|

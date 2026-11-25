@@ -127,9 +127,8 @@ A["reproducibility_max_abs_diff"] = max(diffs.values())
 A["reproducibility_by_strategy"] = {r[0]: float(r[1]) for r in rows}
 
 # ---- 2. preregistered hypotheses -----------------------------------------------------------------------------
-h("2. Preregistered hypotheses H1–H4 (run 1)", "Preregistered. Decision rules are fixed here in writing because the "
-  "preregistration states the hypotheses but not the decision rule; they are the obvious reading of each "
-  "sentence and were not tuned to the results.")
+h("2. Protocol hypotheses H1–H4 (run 1)", "H1–H4 are recorded in the protocol. The decision rules in this "
+  "table were operationalized after run 1.")
 S = res1["strategies"]
 link = lambda k, n=POOL: [r[f"link_top1_{n}"] for r in pt1[k]]  # noqa: E731
 verdicts = {}

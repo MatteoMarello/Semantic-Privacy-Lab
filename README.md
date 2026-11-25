@@ -31,6 +31,9 @@ re-identification risk and utility loss can be measured for each strategy on ide
 - **Uncertainty**: 95% bootstrap intervals over test tickets; paired differences where arms share tickets.
 
 ## Results
+The protocol is documented in Git before the archived Run 1 results. The early commits share a timestamp.
+The decision rules were operationalized after Run 1.
+
 Linkage re-identification (top-1, register of 5,000 people) and embedding similarity to the original text, 800 test
 tickets. "Original" is the preregistered run 1; "unseen phrasings" is the post-hoc test set in which the same
 authors use 15 templates absent from training.

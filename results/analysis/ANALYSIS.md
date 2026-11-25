@@ -18,9 +18,9 @@ Data file hashes (`data/manifest.json`): train `cf133f34e23e…`, test `3697b570
 | S5_oracle_generalize | 0.0000 | 1.000 |
 | S6_oracle_full | 0.0000 | 1.000 |
 
-## 2. Preregistered hypotheses H1–H4 (run 1)
+## 2. Protocol hypotheses H1–H4 (run 1)
 
-*Preregistered. Decision rules are fixed here in writing because the preregistration states the hypotheses but not the decision rule; they are the obvious reading of each sentence and were not tuned to the results.*
+*H1–H4 are recorded in the protocol. The decision rules in this table were operationalized after run 1.*
 
 | Hypothesis | Verdict | Evidence |
 |---|---|---|
