@@ -1,0 +1,37 @@
+{
+ "S0_none": [
+  "hello, i'm a 55-year-old lecturer. i work at county fire service. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of lantern street. best regards, elif crane",
+  "Hello, You can reach me at jakob.tull28@example.org. I have been a customer since I moved here in 1996. I live in Yarrow. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of Copper Lane. Regards.",
+  "Hello, My house is the blue one at the end of Station Approach. I have been a customer since I moved here in 1988. Please transfer my contract to my new address from 18 July. I live in Elmwick. Thanks in advance."
+ ],
+ "S1_regex": [
+  "hello, i'm a 55-year-old lecturer. i work at county fire service. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of lantern street. best regards, elif crane",
+  "Hello, You can reach me at [EMAIL]. I have been a customer since I moved here in 1996. I live in Yarrow. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of Copper Lane. Regards.",
+  "Hello, My house is the blue one at the end of Station Approach. I have been a customer since I moved here in 1988. Please transfer my contract to my new address from 18 July. I live in Elmwick. Thanks in advance."
+ ],
+ "S2_ner": [
+  "hello, i'm a 55-year-old lecturer. i work at county fire service. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of lantern street. best regards, elif crane",
+  "Hello, You can reach me at [EMAIL]. I have been a customer since I moved here in 1996. I live in [LOC]. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of [LOC]. Regards.",
+  "Hello, My house is the blue one at the end of [LOC]. I have been a customer since I moved here in 1988. Please transfer my contract to my new address from 18 July. I live in [LOC]. Thanks in advance."
+ ],
+ "S3_trained_detector": [
+  "hello, i'm a [ID]-year-old [ID]. i work at [ID]. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of [ID]. best regards, [ID]",
+  "Hello, You can reach me at [ID]. I have been a customer since I moved here in [ID]. I live in [ID]. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of [ID]. Regards.",
+  "Hello, My house is the blue one at the end of [ID]. I have been a customer since I moved here in [ID]. Please transfer my contract to my new address from 18 July. I live in [ID]. Thanks in advance."
+ ],
+ "S4_oracle_direct": [
+  "hello, i'm a 55-year-old lecturer. i work at county fire service. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of lantern street. best regards, [NAME]",
+  "Hello, You can reach me at [EMAIL]. I have been a customer since I moved here in 1996. I live in Yarrow. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of Copper Lane. Regards.",
+  "Hello, My house is the blue one at the end of Station Approach. I have been a customer since I moved here in 1988. Please transfer my contract to my new address from 18 July. I live in Elmwick. Thanks in advance."
+ ],
+ "S5_oracle_generalize": [
+  "hello, i'm a [AGE 50-59]-year-old [SECTOR education]. i work at [EMPLOYER public body]. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of lantern street. best regards, [NAME]",
+  "Hello, You can reach me at [EMAIL]. I have been a customer since I moved here in 1996. I live in [REGION West]. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of Copper Lane. Regards.",
+  "Hello, My house is the blue one at the end of Station Approach. I have been a customer since I moved here in 1988. Please transfer my contract to my new address from 18 July. I live in [REGION North]. Thanks in advance."
+ ],
+ "S6_oracle_full": [
+  "hello, i'm a [AGE 50-59]-year-old [SECTOR education]. i work at [EMPLOYER public body]. your engineer missed the appointment on 21 may without notice. my house is the blue one at the end of [REDACTED]. best regards, [NAME]",
+  "Hello, You can reach me at [EMAIL]. I have been a customer since I moved here in [REDACTED]. I live in [REGION West]. My last bill was €537.75, which is far more than usual. My house is the blue one at the end of [REDACTED]. Regards.",
+  "Hello, My house is the blue one at the end of [REDACTED]. I have been a customer since I moved here in [REDACTED]. Please transfer my contract to my new address from 18 July. I live in [REGION North]. Thanks in advance."
+ ]
+}

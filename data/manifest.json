@@ -1,0 +1,25 @@
+{
+  "config": {
+    "seed": 2027,
+    "population": 20000,
+    "test_author_pool": 1000,
+    "n_test": 800,
+    "n_train": 2400,
+    "pool_sizes": [
+      1000,
+      5000,
+      20000
+    ],
+    "main_pool": 5000,
+    "ner_model": "dslim/bert-base-NER",
+    "detector_model": "distilbert-base-cased",
+    "embedder_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "detector_epochs": 2,
+    "threads": 6
+  },
+  "sha256": {
+    "train": "cf133f34e23ed935efe7e9f40c32a6c4cbb850b10c20d2091bcad75dc655868d",
+    "test": "3697b570bf267f92ab111e2ab5d3d776cb4a0bc2545dfd38b54863b19dd9648c",
+    "population": "8185679fa718b0c9d96d298b64b5a770c9d395d82dec52334e256337597a47a4"
+  }
+}

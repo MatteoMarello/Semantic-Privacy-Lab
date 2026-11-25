@@ -60,3 +60,21 @@ def test_regex_masks_email_and_phone():
     t["text"] = f"Write to {PEOPLE[1].email} or call {PEOPLE[1].phone}."
     out = A.s1_regex(t)
     assert PEOPLE[1].email not in out and PEOPLE[1].phone not in out
+
+
+def test_shifted_tickets_have_correct_spans_and_are_readable():
+    rng = random.Random(9)
+    att = LinkageAttacker(PEOPLE)
+    hits = 0
+    for p in PEOPLE[:150]:
+        t = make_ticket(p, rng, "s", shifted=True)
+        vals = {k: v.lower() for k, v in person_values(p).items()}
+        for s in t["spans"]:
+            if s["level"] != "task":
+                assert t["text"][s["start"]:s["end"]].lower() == vals[s["attr"]]
+        extracted = dict(extract(t["text"]))
+        for s in t["spans"]:
+            if s["attr"] in ("age", "arrival_year", "name", "email"):
+                assert extracted.get(s["attr"]) == vals[s["attr"]], (s["attr"], t["text"])
+        hits += att.attack(t["text"], p.pid, np.random.default_rng(0))["top1"]
+    assert hits / 150 > 0.5          # unprotected shifted tickets are mostly re-identifiable

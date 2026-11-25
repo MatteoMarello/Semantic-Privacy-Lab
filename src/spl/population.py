@@ -87,6 +87,25 @@ MENTIONS = [
 ]
 CLOSINGS = [("direct", ["name"], "Best regards, {name}"), (None, [], "Thanks in advance."), (None, [], "Regards.")]
 
+# Phrasings never used in training tickets: a distribution-shift test for learned detectors (added after the
+# first full run showed that the trained detector saturates on in-distribution templates; see docs/REPORT.md).
+MENTIONS_SHIFTED = [
+    ("direct", ["name"], "This is {name} writing."),
+    ("direct", ["email"], "Please reply to {email}."),
+    ("direct", ["phone"], "Call me back on {phone} if needed."),
+    ("quasi", ["age"], "At {age}, I did not expect this."),
+    ("quasi", ["age", "occupation"], "{age} years old and a {occupation} by trade, I keep careful records."),
+    ("quasi", ["town"], "Our flat is in {town}."),
+    ("quasi", ["occupation"], "My job as a {occupation} keeps me away during the day."),
+    ("quasi", ["employer"], "My employer, {employer}, can confirm my working hours."),
+    ("quasi", ["occupation", "employer"], "I have been a {occupation} with {employer} for years."),
+    ("context", ["club", "club_role"], "Most evenings I am at the {club}, where I serve as {club_role}."),
+    ("context", ["arrival_year"], "We settled here back in {arrival_year}."),
+    ("context", ["street", "occupation"], "Everyone on {street} knows the {occupation} at number 12."),
+    ("context", ["street"], "We are the house with the green door on {street}."),
+]
+CLOSINGS_SHIFTED = [("direct", ["name"], "Many thanks, {name}"), (None, [], "Kind regards.")]
+
 
 @dataclass
 class Person:
@@ -153,11 +172,11 @@ def _fill(template: str, values: dict[str, str]) -> tuple[str, list[tuple[int, i
     return "".join(out), spans
 
 
-def make_ticket(person: Person, rng: random.Random, tid: str) -> dict:
+def make_ticket(person: Person, rng: random.Random, tid: str, shifted: bool = False) -> dict:
     cat = rng.choice(CATEGORIES)
     values = {k: str(v) for k, v in asdict(person).items() if v is not None}
     values["club_role_article"] = "an" if (person.club_role or "")[:1] in "aeiou" else "a"
-    pool = [m for m in MENTIONS if all(a in values for a in m[1])]
+    pool = [m for m in (MENTIONS_SHIFTED if shifted else MENTIONS) if all(a in values for a in m[1])]
     k = rng.choice([1, 2, 2, 3, 3, 4])
     mentions, seen = [], set()
     for m in rng.sample(pool, len(pool)):          # avoid repeating the same attribute twice
@@ -167,7 +186,7 @@ def make_ticket(person: Person, rng: random.Random, tid: str) -> dict:
     body = rng.choice(REQUEST[cat])
     facts = {"amount": f"{rng.randrange(20, 900)}.{rng.randrange(0, 99):02d}",
              "date": f"{rng.randrange(1, 28)} {rng.choice(MONTHS)}"}
-    closing = rng.choice(CLOSINGS)
+    closing = rng.choice(CLOSINGS_SHIFTED if shifted else CLOSINGS)
     segments = [(None, [], "Hello,")] + mentions[: len(mentions) // 2 + 1] + [(None, [], body)] + \
         mentions[len(mentions) // 2 + 1:] + [closing]
     text, spans = "", []

@@ -40,8 +40,8 @@ def extract(text: str) -> list[tuple[str, str]]:
         found.append(("email", m.group(1)))
     for m in re.finditer(r"(\+\d{2}(?:[ -]?\d){7,12})", text):
         found.append(("phone", m.group(1)))
-    for m in re.finditer(r"\b(\d{2})(?: years old|-year-old)", t):
-        found.append(("age", m.group(1)))
+    for m in re.finditer(r"\b(\d{2})(?: years old|-year-old)|\bat (\d{2}),", t):
+        found.append(("age", m.group(1) or m.group(2)))
     for m in re.finditer(r"\[age (\d+)-\d+\]", t):
         found.append(("age_band", m.group(1)))
     for m in re.finditer(r"\[region (\w+)\]", t):
@@ -50,13 +50,14 @@ def extract(text: str) -> list[tuple[str, str]]:
         found.append(("sector", m.group(1)))
     for m in re.finditer(r"\[employer ([\w ]+?)\]", t):
         found.append(("employer_type", m.group(1)))
-    for m in re.finditer(r"moved here in (\d{4})", t):
+    for m in re.finditer(r"(?:moved here|settled here back) in (\d{4})", t):
         found.append(("arrival_year", m.group(1)))
     for role in CLUB_ROLES:
-        if re.search(rf"\b{role} of the\b", t):
+        if re.search(rf"\b{role} of the\b|serve as {role}\b", t):
             found.append(("club_role", role))
-    for m in re.finditer(r"my name is ([a-z]+ [a-z]+)|regards, ([a-z]+ [a-z]+)", t):
-        found.append(("name", m.group(1) or m.group(2)))
+    for m in re.finditer(r"my name is ([a-z]+ [a-z]+)|regards, ([a-z]+ [a-z]+)|this is ([a-z]+ [a-z]+) writing"
+                         r"|many thanks, ([a-z]+ [a-z]+)", t):
+        found.append(("name", next(g for g in m.groups() if g)))
     return found
 
 
