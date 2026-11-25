@@ -58,7 +58,7 @@ authors use 15 templates absent from training.
   re-identified at 0.363, those in classes of more than 20 at 0.141.
 
 **Post-hoc findings** ([`docs/REPORT.md`](docs/REPORT.md), section 4):
-- Run 2 reproduces every run-1 estimate exactly.
+- Run 2 reproduces the run-1 point estimates at the reported precision. The saved per-ticket attack outcomes match exactly.
 - The trained detector generalizes in aggregate: 0.003 on unseen phrasings, and 0.000 / 0.005 on a new population
   with unseen names, towns, occupations, employers, clubs and streets. The suspicion that its run-1 result reflected
   memorized values is not supported.
@@ -107,5 +107,4 @@ evaluated with attacks, not only with detection metrics.
 MIT for code and the synthetic data. Models are downloaded from Hugging Face under their own licenses
 (MIT / Apache-2.0).
 
-Code, analyses and documentation were developed with Claude Code (Anthropic), an AI coding assistant, under my
-direction. All reported numbers are produced by the scripts in this repository.
+I used an AI coding assistant for implementation, analysis and documentation. All reported numbers are produced by the scripts in this repository.

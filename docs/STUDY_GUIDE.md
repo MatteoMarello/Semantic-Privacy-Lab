@@ -96,7 +96,7 @@ exactly.
 | Decision rules for H1–H4 | Written after run 1 (the preregistration states hypotheses, not thresholds); they are the literal reading of each sentence |
 | Operational definition of "rarity" | Chosen after run 1 (generalized quasi-identifier class size in the 5k register) |
 | Shifted-phrasing test set, "other words kept" | Post-hoc, motivated by two run-1 observations (S3 saturating at 0.000; U1 saturating at 1.000) |
-| Attacker patterns for the shifted phrasings | Added together with the shifted set; run 2 verifies that run-1 numbers are reproduced exactly, so the change does not affect the preregistered results |
+| Attacker patterns for the shifted phrasings | Added together with the shifted set; run 2 reproduces the recorded attack outcomes exactly and the point estimates at the reported precision |
 | Unseen-values probe (`scripts/probe_unseen_values.py`) | Post-hoc, exploratory |
 | Template-level, attribute-level and residual-risk breakdowns, trade-off rank correlation | Post-hoc, exploratory |
 
@@ -184,7 +184,7 @@ SPL_THREADS=4 python scripts/run_experiment.py configs/experiment.json results/r
 ```
 Useful checks:
 - `data/manifest.json` holds SHA-256 hashes of every data file; a re-run must reproduce them.
-- `results/analysis/ANALYSIS.md`, section 1, compares run 2's original-test-set numbers with run 1 (identical).
+- `results/analysis/ANALYSIS.md`, section 1, compares run 2's original-test-set estimates with run 1 at the reported precision.
 - `results/run2/anonymized.jsonl` contains every anonymized ticket, so any strategy's output can be read directly,
   e.g. `grep '"shift0001"' results/run2/anonymized.jsonl`.
 - A single ticket can be attacked by hand:
