@@ -1,0 +1,6 @@
+{
+  "seed": 1, "population": 3000, "test_author_pool": 1000, "n_test": 40, "n_train": 120,
+  "pool_sizes": [1000, 3000], "main_pool": 1000, "ner_model": "dslim/bert-base-NER",
+  "detector_model": "distilbert-base-cased", "embedder_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "detector_epochs": 1, "threads": 4
+}
